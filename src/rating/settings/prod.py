@@ -12,3 +12,5 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda val: list(map(lambda x: x.st
 DATABASES = {
     'default': parse_db_connection_string(config('DATABASE_URI'))
 }
+
+UNIVERSITY_NAME = config('UNIVERSITY_NAME')

@@ -60,10 +60,11 @@ class PersonAdmin(admin.ModelAdmin):
     )
     ordering = ('full_name',)
     autocomplete_fields = ('department',)
+    filter_horizontal = ('person_types',)
     sortable_by = ('full_name',)
     fieldsets = (
         (None, {
-            'fields': ('full_name', 'department')
+            'fields': ('full_name', 'department', 'person_types')
         }),
         ('Keys', {
             'classes': ('collapse',),
@@ -80,6 +81,17 @@ class PersonAdmin(admin.ModelAdmin):
 
     def department(self, obj: models.Person):
         return obj.department.name
+
+
+@admin.register(models.PersonType)
+class PersonTypeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+    fields = ('name',)
+    ordering = ('name',)
+
+    def has_module_permission(self, request):
+        return False
 
 
 @admin.register(models.Article)

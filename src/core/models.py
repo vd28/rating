@@ -41,6 +41,15 @@ class Department(models.Model):
         return self.name
 
 
+class PersonType(models.Model):
+    NAME_MAX_LENGTH = 1024
+
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+
+    def __str__(self):
+        return self.name
+
+
 class Person(models.Model):
     FULL_NAME_MAX_LENGTH = 1024
 
@@ -62,6 +71,8 @@ class Person(models.Model):
     wos_key = models.CharField(
         verbose_name='Web of Science Key', max_length=50, unique=True, blank=True, null=True
     )
+
+    person_types = models.ManyToManyField(PersonType, related_name='persons')
 
     def __str__(self):
         return self.full_name
