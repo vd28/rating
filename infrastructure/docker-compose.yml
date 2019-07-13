@@ -1,0 +1,15 @@
+version: "3"
+services:
+  db:
+    image: postgres:10.7
+    environment:
+      POSTGRES_DB: rating_dev
+      POSTGRES_USER: rating
+      POSTGRES_PASSWORD: rating
+    volumes:
+      - rating_server_vol:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  rating_server_vol:
