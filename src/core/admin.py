@@ -90,9 +90,6 @@ class PersonTypeAdmin(admin.ModelAdmin):
     fields = ('name',)
     ordering = ('name',)
 
-    def has_module_permission(self, request):
-        return False
-
 
 @admin.register(models.Article)
 class ArticleAdmin(admin.ModelAdmin):
@@ -149,7 +146,7 @@ class RevisionAdmin(admin.ModelAdmin):
 
 class BaseSnapshotAdmin(admin.ModelAdmin):
     list_select_related = ('person', 'revision')
-    ordering = ('-revision__created_at', 'person__full_name')
+    ordering = ('-revision__created_at',)
     list_display = ('person', 'revision')
     search_fields = (
         'person__full_name', '=person__orcid', '=person__scopus_key', '=person__google_scholar_key',
@@ -161,26 +158,26 @@ class BaseSnapshotAdmin(admin.ModelAdmin):
 @admin.register(models.ScopusSnapshot)
 class ScopusRevisionAdmin(BaseSnapshotAdmin):
     list_display = BaseSnapshotAdmin.list_display + ('h_index', 'documents', 'citations')
-    ordering = BaseSnapshotAdmin.ordering + ('h_index', 'documents', 'citations')
+    ordering = BaseSnapshotAdmin.ordering + ('-h_index', '-documents', '-citations')
     list_editable = ('h_index', 'documents', 'citations')
 
 
 @admin.register(models.GoogleScholarSnapshot)
 class GoogleScholarRevisionAdmin(BaseSnapshotAdmin):
     list_display = BaseSnapshotAdmin.list_display + ('h_index', 'citations')
-    ordering = BaseSnapshotAdmin.ordering + ('h_index', 'citations')
+    ordering = BaseSnapshotAdmin.ordering + ('-h_index', '-citations')
     list_editable = ('h_index', 'citations')
 
 
 @admin.register(models.SemanticScholarSnapshot)
 class SemanticScholarRevisionAdmin(BaseSnapshotAdmin):
     list_display = BaseSnapshotAdmin.list_display + ('citation_velocity', 'influential_citation_count')
-    ordering = BaseSnapshotAdmin.ordering + ('citation_velocity', 'influential_citation_count')
+    ordering = BaseSnapshotAdmin.ordering + ('-citation_velocity', '-influential_citation_count')
     list_editable = ('citation_velocity', 'influential_citation_count')
 
 
 @admin.register(models.WosSnapshot)
 class WosRevisionAdmin(BaseSnapshotAdmin):
     list_display = BaseSnapshotAdmin.list_display + ('publications',)
-    ordering = BaseSnapshotAdmin.ordering + ('publications',)
+    ordering = BaseSnapshotAdmin.ordering + ('-publications',)
     list_editable = ('publications',)

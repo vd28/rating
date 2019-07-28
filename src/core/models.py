@@ -3,6 +3,8 @@ import textwrap
 from django.db import models
 from django.utils import formats
 
+from .rating_builder import Options
+
 
 class University(models.Model):
     class Meta:
@@ -72,7 +74,7 @@ class Person(models.Model):
         verbose_name='Web of Science Key', max_length=50, unique=True, blank=True, null=True
     )
 
-    person_types = models.ManyToManyField(PersonType, related_name='persons')
+    person_types = models.ManyToManyField(PersonType, related_name='persons', blank=True)
 
     def __str__(self):
         return self.full_name
@@ -85,6 +87,7 @@ class Revision(models.Model):
         return formats.date_format(self.created_at, 'SHORT_DATETIME_FORMAT')
 
 
+
 class AbstractSnapshot(models.Model):
     class Meta:
         abstract = True
@@ -92,6 +95,10 @@ class AbstractSnapshot(models.Model):
 
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     revision = models.ForeignKey(Revision, on_delete=models.CASCADE)
+
+    @staticmethod
+    def get_options():
+        raise NotImplementedError
 
 
 class ScopusSnapshot(AbstractSnapshot):
@@ -103,6 +110,14 @@ class ScopusSnapshot(AbstractSnapshot):
     documents = models.PositiveIntegerField(default=0)
     citations = models.PositiveIntegerField(default=0)
 
+    @staticmethod
+    def get_options():
+        return Options(
+            name='scopussnapshot',
+            fields={'h_index', 'documents', 'citations'},
+            ordering=('-h_index', '-documents', '-citations'),
+        )
+
 
 class GoogleScholarSnapshot(AbstractSnapshot):
     class Meta(AbstractSnapshot.Meta):
@@ -111,6 +126,14 @@ class GoogleScholarSnapshot(AbstractSnapshot):
 
     h_index = models.PositiveIntegerField(verbose_name=' h-index', default=0)
     citations = models.PositiveIntegerField(default=0)
+
+    @staticmethod
+    def get_options():
+        return Options(
+            name='googlescholarsnapshot',
+            fields={'h_index', 'citations'},
+            ordering=('-h_index', '-citations'),
+        )
 
 
 class SemanticScholarSnapshot(AbstractSnapshot):
@@ -121,6 +144,14 @@ class SemanticScholarSnapshot(AbstractSnapshot):
     citation_velocity = models.PositiveIntegerField(default=0)
     influential_citation_count = models.PositiveIntegerField(default=0)
 
+    @staticmethod
+    def get_options():
+        return Options(
+            name='semanticcholarsnapshot',
+            fields={'citation_velocity', 'influential_citation_count'},
+            ordering=('-citation_velocity', '-influential_citation_count'),
+        )
+
 
 class WosSnapshot(AbstractSnapshot):
     class Meta(AbstractSnapshot.Meta):
@@ -128,6 +159,14 @@ class WosSnapshot(AbstractSnapshot):
         verbose_name_plural = 'Web of Science Snapshots'
 
     publications = models.PositiveIntegerField(default=0)
+
+    @staticmethod
+    def get_options():
+        return Options(
+            name='wossnapshot',
+            fields={'publications'},
+            ordering=('-publications',),
+        )
 
 
 class Article(models.Model):

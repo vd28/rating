@@ -1,0 +1,434 @@
+[
+  {
+    "model": "core.university",
+    "pk": 1,
+    "fields": {
+      "name": "KSU"
+    }
+  },
+  {
+    "model": "core.faculty",
+    "pk": 1,
+    "fields": {
+      "name": "F1",
+      "university": 1
+    }
+  },
+  {
+    "model": "core.faculty",
+    "pk": 2,
+    "fields": {
+      "name": "F2",
+      "university": 1
+    }
+  },
+  {
+    "model": "core.faculty",
+    "pk": 3,
+    "fields": {
+      "name": "F3",
+      "university": 1
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 1,
+    "fields": {
+      "name": "D1",
+      "faculty": 1
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 2,
+    "fields": {
+      "name": "D2",
+      "faculty": 1
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 3,
+    "fields": {
+      "name": "D3",
+      "faculty": 1
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 4,
+    "fields": {
+      "name": "D4",
+      "faculty": 2
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 5,
+    "fields": {
+      "name": "D5",
+      "faculty": 2
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 6,
+    "fields": {
+      "name": "D6",
+      "faculty": 2
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 7,
+    "fields": {
+      "name": "D7",
+      "faculty": 3
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 8,
+    "fields": {
+      "name": "D8",
+      "faculty": 3
+    }
+  },
+  {
+    "model": "core.department",
+    "pk": 9,
+    "fields": {
+      "name": "D9",
+      "faculty": 3
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 1,
+    "fields": {
+      "full_name": "P1",
+      "department": 1
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 2,
+    "fields": {
+      "full_name": "P2",
+      "department": 1
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 3,
+    "fields": {
+      "full_name": "P3",
+      "department": 1
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 4,
+    "fields": {
+      "full_name": "P4",
+      "department": 2
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 5,
+    "fields": {
+      "full_name": "P5",
+      "department": 2
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 6,
+    "fields": {
+      "full_name": "P6",
+      "department": 2
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 7,
+    "fields": {
+      "full_name": "P7",
+      "department": 3
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 8,
+    "fields": {
+      "full_name": "P8",
+      "department": 3
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 9,
+    "fields": {
+      "full_name": "P9",
+      "department": 3
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 10,
+    "fields": {
+      "full_name": "P10",
+      "department": 4
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 11,
+    "fields": {
+      "full_name": "P11",
+      "department": 4
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 12,
+    "fields": {
+      "full_name": "P12",
+      "department": 4
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 13,
+    "fields": {
+      "full_name": "P13",
+      "department": 5
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 14,
+    "fields": {
+      "full_name": "P14",
+      "department": 5
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 15,
+    "fields": {
+      "full_name": "P15",
+      "department": 5
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 16,
+    "fields": {
+      "full_name": "P16",
+      "department": 6
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 17,
+    "fields": {
+      "full_name": "P17",
+      "department": 6
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 18,
+    "fields": {
+      "full_name": "P18",
+      "department": 6
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 19,
+    "fields": {
+      "full_name": "P19",
+      "department": 7
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 20,
+    "fields": {
+      "full_name": "P20",
+      "department": 7
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 21,
+    "fields": {
+      "full_name": "P21",
+      "department": 7
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 22,
+    "fields": {
+      "full_name": "P22",
+      "department": 8
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 23,
+    "fields": {
+      "full_name": "P23",
+      "department": 8
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 24,
+    "fields": {
+      "full_name": "P24",
+      "department": 8
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 25,
+    "fields": {
+      "full_name": "P25",
+      "department": 9
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 26,
+    "fields": {
+      "full_name": "P26",
+      "department": 9
+    }
+  },
+  {
+    "model": "core.person",
+    "pk": 27,
+    "fields": {
+      "full_name": "P27",
+      "department": 9
+    }
+  },
+  {
+    "model": "core.revision",
+    "pk": 1,
+    "fields": {
+      "created_at": "2019-07-26T22:54:25Z"
+    }
+  },
+  {
+    "model": "core.revision",
+    "pk": 2,
+    "fields": {
+      "created_at": "2019-07-27T22:54:25Z"
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 1,
+    "fields": {
+      "h_index": 2,
+      "documents": 10,
+      "citations": 122,
+      "revision": 1,
+      "person": 1
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 2,
+    "fields": {
+      "h_index": 3,
+      "documents": 2,
+      "citations": 100,
+      "revision": 1,
+      "person": 4
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 3,
+    "fields": {
+      "h_index": 5,
+      "documents": 4,
+      "citations": 45,
+      "revision": 1,
+      "person": 7
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 4,
+    "fields": {
+      "h_index": 5,
+      "documents": 5,
+      "citations": 12,
+      "revision": 1,
+      "person": 10
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 5,
+    "fields": {
+      "h_index": 7,
+      "documents": 7,
+      "citations": 20,
+      "revision": 1,
+      "person": 13
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 6,
+    "fields": {
+      "h_index": 10,
+      "documents": 4,
+      "citations": 30,
+      "revision": 1,
+      "person": 16
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 7,
+    "fields": {
+      "h_index": 8,
+      "documents": 5,
+      "citations": 12,
+      "revision": 1,
+      "person": 19
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 8,
+    "fields": {
+      "h_index": 0,
+      "documents": 78,
+      "citations": 20,
+      "revision": 1,
+      "person": 22
+    }
+  },
+  {
+    "model": "core.scopussnapshot",
+    "pk": 9,
+    "fields": {
+      "h_index": 0,
+      "documents": 2034,
+      "citations": 456,
+      "revision": 1,
+      "person": 23
+    }
+  }
+]
