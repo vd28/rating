@@ -58,9 +58,15 @@ class Person(models.Model):
     full_name = models.CharField(max_length=FULL_NAME_MAX_LENGTH)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     articles = models.ManyToManyField('Article', through='ArticleItem')
+    person_types = models.ManyToManyField(PersonType, related_name='persons', blank=True)
 
-    orcid = models.CharField(verbose_name='ORCID', max_length=19, unique=True, blank=True, null=True)
-    scopus_key = models.CharField(verbose_name='Scopus Key', max_length=50, unique=True, blank=True, null=True)
+    orcid = models.CharField(
+        verbose_name='ORCID', max_length=19, unique=True, blank=True, null=True
+    )
+
+    scopus_key = models.CharField(
+        verbose_name='Scopus Key', max_length=50, unique=True, blank=True, null=True
+    )
 
     google_scholar_key = models.CharField(
         verbose_name='Google Scholar Key', max_length=50, unique=True, blank=True, null=True
@@ -74,8 +80,6 @@ class Person(models.Model):
         verbose_name='Web of Science Key', max_length=50, unique=True, blank=True, null=True
     )
 
-    person_types = models.ManyToManyField(PersonType, related_name='persons', blank=True)
-
     def __str__(self):
         return self.full_name
 
@@ -85,7 +89,6 @@ class Revision(models.Model):
 
     def __str__(self):
         return formats.date_format(self.created_at, 'SHORT_DATETIME_FORMAT')
-
 
 
 class AbstractSnapshot(models.Model):

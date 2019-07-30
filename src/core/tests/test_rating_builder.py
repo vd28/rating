@@ -1,10 +1,12 @@
+import os
+from django.conf import settings
 from django.test import TestCase
 from .. import rating_builder, models
 
 
 class PersonRatingBuilderTestCase(TestCase):
     fixtures = [
-        'snapshots'
+        os.path.join(settings.BASE_DIR, 'core/tests/fixtures/snapshots.json')
     ]
 
     @classmethod
@@ -30,23 +32,29 @@ class PersonRatingBuilderTestCase(TestCase):
 
     def test_default_ordering(self):
         result = self.builder.build()
+        self.assertEqual(9, len(result.objects))
         for person, params in zip(result.objects, self.expected_rating):
             self.assertEqual(params[0], person.scopussnapshot_h_index)
             self.assertEqual(params[1], person.scopussnapshot_documents)
             self.assertEqual(params[2], person.scopussnapshot_citations)
 
     def test_pagination(self):
-        self.builder.set_pagination(rating_builder.Pagination(1, 3))
-        result = self.builder.build()
+        for pagination in (rating_builder.Pagination(1, 3), rating_builder.Pagination(2, 3)):
 
-        self.assertEqual(1, result.page)
-        self.assertEqual(3, result.limit)
-        self.assertEqual(9, result.total)
+            self.builder.set_pagination(pagination)
+            result = self.builder.build()
 
-        for person, params in zip(result.objects, self.expected_rating):
-            self.assertEqual(params[0], person.scopussnapshot_h_index)
-            self.assertEqual(params[1], person.scopussnapshot_documents)
-            self.assertEqual(params[2], person.scopussnapshot_citations)
+            self.assertEqual(pagination.limit, len(result.objects))
+            self.assertEqual(pagination.page, result.page)
+            self.assertEqual(pagination.limit, result.limit)
+            self.assertEqual(9, result.total)
+
+            left, _ = pagination.range
+
+            for person, params in zip(result.objects, self.expected_rating[left:]):
+                self.assertEqual(params[0], person.scopussnapshot_h_index)
+                self.assertEqual(params[1], person.scopussnapshot_documents)
+                self.assertEqual(params[2], person.scopussnapshot_citations)
 
         self.builder.set_pagination(rating_builder.Pagination(2, 9))
         with self.assertRaises(rating_builder.PageDoesNotExist):
@@ -56,13 +64,45 @@ class PersonRatingBuilderTestCase(TestCase):
         expected_rating = sorted(self.expected_rating, key=lambda item: item[1], reverse=True)
         self.builder.set_ordering(('-documents',))
         result = self.builder.build()
+        self.assertEqual(9, len(result.objects))
         for person, params in zip(result.objects, expected_rating):
             self.assertEqual(params[1], person.scopussnapshot_documents)
+
+    def test_person_types(self):
+        self.builder.set_person_types([2])
+        result = self.builder.build()
+        self.assertEqual(2, len(result.objects))
+        expected_rating = [
+            # h-index documents citations
+            (3, 2, 100),
+            (2, 10, 122)
+        ]
+        for person, params in zip(result.objects, expected_rating):
+            self.assertEqual(params[0], person.scopussnapshot_h_index)
+            self.assertEqual(params[1], person.scopussnapshot_documents)
+            self.assertEqual(params[2], person.scopussnapshot_citations)
+
+    def test_search(self):
+        self.builder.set_term('P')
+        result = self.builder.build()
+        self.assertEqual(9, len(result.objects))
+        for person, params in zip(result.objects, self.expected_rating):
+            self.assertEqual(params[0], person.scopussnapshot_h_index)
+            self.assertEqual(params[1], person.scopussnapshot_documents)
+            self.assertEqual(params[2], person.scopussnapshot_citations)
+
+        self.builder.set_term('P10')
+        result = self.builder.build()
+        self.assertEqual(1, len(result.objects))
+        person = result.objects[0]
+        self.assertEqual(5, person.scopussnapshot_h_index)
+        self.assertEqual(5, person.scopussnapshot_documents)
+        self.assertEqual(12, person.scopussnapshot_citations)
 
 
 class FacultyRatingBuilderTestCase(TestCase):
     fixtures = [
-        'snapshots'
+        os.path.join(settings.BASE_DIR, 'core/tests/fixtures/snapshots.json')
     ]
 
     @classmethod
@@ -82,6 +122,7 @@ class FacultyRatingBuilderTestCase(TestCase):
 
     def test_default_ordering(self):
         result = self.builder.build()
+        self.assertEqual(3, len(result.objects))
         for faculty, params in zip(result.objects, self.expected_rating):
             self.assertEqual(params[0], faculty.scopussnapshot_h_index)
             self.assertEqual(params[1], faculty.scopussnapshot_documents)
@@ -90,7 +131,7 @@ class FacultyRatingBuilderTestCase(TestCase):
 
 class DepartmentRatingBuilderTestCase(TestCase):
     fixtures = [
-        'snapshots'
+        os.path.join(settings.BASE_DIR, 'core/tests/fixtures/snapshots.json')
     ]
 
     @classmethod
@@ -110,6 +151,7 @@ class DepartmentRatingBuilderTestCase(TestCase):
 
     def test_default_ordering(self):
         result = self.builder.build()
+        self.assertEqual(3, len(result.objects))
         for department, params in zip(result.objects, self.expected_rating):
             self.assertEqual(params[0], department.scopussnapshot_h_index)
             self.assertEqual(params[1], department.scopussnapshot_documents)

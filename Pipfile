@@ -11,6 +11,7 @@ python-decouple = "*"
 dj-database-url = "*"
 psycopg2 = "*"
 django-nested-admin = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.6"

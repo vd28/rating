@@ -45,8 +45,8 @@ class Pagination:
 
     @property
     def range(self) -> Tuple[int, int]:
-        offset = (self.page - 1) * self.limit
-        return offset, offset + self.limit + 1
+        offset = (self.page - 1) * (self.limit + 1)
+        return offset, offset + self.limit
 
 
 class Results:
@@ -76,12 +76,12 @@ class AbstractRatingBuilder:
             raise ValueError('revision must be set')
 
         qs = self.get_queryset().filter(**{self.build_snapshot_field_lookup('revision_id'): self.revision_id})
-        total = qs.count()
 
-        qs = self.search(qs)
         qs = self.sort(qs)
         qs = self.annotate(qs)
+        total = qs.count()
         qs = self.paginate(qs)
+        qs = self.search(qs)
 
         objects = tuple(qs)
         pagination = self.pagination or Pagination(page=1, limit=total or 1)
@@ -255,6 +255,7 @@ class PersonRatingBuilder(AbstractRatingBuilder):
     def __init__(self, snapshot_options: Options):
         super().__init__(snapshot_options)
         self.university_id = None
+        self.person_type_ids = []
 
     def build_field_lookups(self):
         fields_map = super().build_field_lookups()
@@ -265,8 +266,15 @@ class PersonRatingBuilder(AbstractRatingBuilder):
         self.university_id = university_id
         return self
 
+    def set_person_types(self, person_type_ids: Iterable[int]) -> 'PersonRatingBuilder':
+        self.person_type_ids = person_type_ids
+        return self
+
     def get_queryset(self) -> models.QuerySet:
-        return core_models.Person.objects.filter(department__faculty__university_id=self.university_id)
+        qs = core_models.Person.objects.filter(department__faculty__university_id=self.university_id)
+        if len(self.person_type_ids) > 0:
+            qs = qs.filter(person_types__id__in=tuple(self.person_type_ids))
+        return qs
 
     def build(self):
         if self.university_id is None:
