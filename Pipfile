@@ -12,6 +12,7 @@ dj-database-url = "*"
 psycopg2 = "*"
 django-nested-admin = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.6"
