@@ -31,6 +31,10 @@ class PersonSerializer(BaseRatingSerializer):
     id = serializers.IntegerField()
     full_name = serializers.CharField()
     department_id = serializers.IntegerField()
+    person_type_ids = serializers.SerializerMethodField()
+
+    def get_person_type_ids(self, instance):
+        return instance.person_types.all().values_list('id', flat=True)
 
 
 class BaseRatingOptionsSerializer(serializers.Serializer):
@@ -46,6 +50,7 @@ class BaseRatingOptionsSerializer(serializers.Serializer):
 
 class PersonRatingOptionsSerializer(BaseRatingOptionsSerializer):
     university_id = serializers.IntegerField()
+    person_type_ids = serializers.ListField(child=serializers.IntegerField(), required=False)
 
 
 class FacultyRatingOptionsSerializer(BaseRatingOptionsSerializer):

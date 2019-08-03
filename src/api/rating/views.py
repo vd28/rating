@@ -116,6 +116,7 @@ class PersonRatingView(BaseRatingView):
 
     def build_rating(self, request: Request, builder: PersonRatingBuilder, options: Dict[str, Any]):
         builder.set_university(options['university_id'])
+        builder.set_person_types(options.get('person_type_ids', ()))
         return builder.build()
 
 

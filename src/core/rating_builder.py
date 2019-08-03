@@ -267,14 +267,14 @@ class PersonRatingBuilder(AbstractRatingBuilder):
         return self
 
     def set_person_types(self, person_type_ids: Iterable[int]) -> 'PersonRatingBuilder':
-        self.person_type_ids = person_type_ids
+        self.person_type_ids = tuple(person_type_ids)
         return self
 
     def get_queryset(self) -> models.QuerySet:
         qs = core_models.Person.objects.filter(department__faculty__university_id=self.university_id)
         if len(self.person_type_ids) > 0:
             qs = qs.filter(person_types__id__in=tuple(self.person_type_ids))
-        return qs
+        return qs.distinct()
 
     def build(self):
         if self.university_id is None:
