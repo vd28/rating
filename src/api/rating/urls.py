@@ -1,8 +1,8 @@
-from django.urls import path
+from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    path('persons/', views.PersonRatingView.as_view()),
-    path('faculties/', views.FacultyRatingView.as_view()),
-    path('departments/', views.DepartmentRatingView.as_view())
+    re_path(r'persons/?', views.PersonRatingView.as_view()),
+    re_path(r'faculties/?', views.FacultyRatingView.as_view()),
+    re_path(r'departments/?', views.DepartmentRatingView.as_view())
 ]
