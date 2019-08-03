@@ -17,7 +17,7 @@ class PageDoesNotExist(RatingBuilderError):
 
 class FieldDoesNotExist(RatingBuilderError):
     def __init__(self, field: str):
-        super().__init__(repr(field))
+        super().__init__(f'The field {repr(field)} does not exist.')
         self.field = field
 
 
@@ -45,7 +45,7 @@ class Pagination:
 
     @property
     def range(self) -> Tuple[int, int]:
-        offset = (self.page - 1) * (self.limit + 1)
+        offset = (self.page - 1) * self.limit
         return offset, offset + self.limit
 
 
@@ -79,9 +79,9 @@ class AbstractRatingBuilder:
 
         qs = self.sort(qs)
         qs = self.annotate(qs)
+        qs = self.search(qs)
         total = qs.count()
         qs = self.paginate(qs)
-        qs = self.search(qs)
 
         objects = tuple(qs)
         pagination = self.pagination or Pagination(page=1, limit=total or 1)

@@ -39,12 +39,13 @@ class PersonRatingBuilderTestCase(TestCase):
             self.assertEqual(params[2], person.scopussnapshot_citations)
 
     def test_pagination(self):
-        for pagination in (rating_builder.Pagination(1, 3), rating_builder.Pagination(2, 3)):
+        for pagination, count in ((rating_builder.Pagination(1, 7), 7), (rating_builder.Pagination(2, 7), 2)):
 
             self.builder.set_pagination(pagination)
             result = self.builder.build()
 
-            self.assertEqual(pagination.limit, len(result.objects))
+            self.assertEqual(count, len(result.objects))
+            self.assertEqual(pagination.limit, 7)
             self.assertEqual(pagination.page, result.page)
             self.assertEqual(pagination.limit, result.limit)
             self.assertEqual(9, result.total)
@@ -86,6 +87,7 @@ class PersonRatingBuilderTestCase(TestCase):
         self.builder.set_term('P')
         result = self.builder.build()
         self.assertEqual(9, len(result.objects))
+        self.assertEqual(9, result.total)
         for person, params in zip(result.objects, self.expected_rating):
             self.assertEqual(params[0], person.scopussnapshot_h_index)
             self.assertEqual(params[1], person.scopussnapshot_documents)
@@ -94,6 +96,7 @@ class PersonRatingBuilderTestCase(TestCase):
         self.builder.set_term('P10')
         result = self.builder.build()
         self.assertEqual(1, len(result.objects))
+        self.assertEqual(1, result.total)
         person = result.objects[0]
         self.assertEqual(5, person.scopussnapshot_h_index)
         self.assertEqual(5, person.scopussnapshot_documents)
