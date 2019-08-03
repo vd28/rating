@@ -1,0 +1,12 @@
+{
+  "name": "rating",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "node-sass": "^4.12.0",
+    "yuglify": "^2.0.0"
+  }
+}

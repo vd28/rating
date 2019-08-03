@@ -4,6 +4,8 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+NODE_MODULES = os.path.join(os.path.dirname(BASE_DIR), 'node_modules')
+
 SECRET_KEY = 'yj@v(ey2p)i8k!fk-smheuen8p-any&o9hlv4_3u1s3tma3$a!'
 
 DEBUG = False
@@ -14,6 +16,7 @@ INSTALLED_APPS = [
     'nested_admin',
     'corsheaders',
     'rest_framework',
+    'pipeline',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,6 +39,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware'
 ]
 
 ROOT_URLCONF = 'rating.urls'
@@ -86,7 +91,14 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+    'pipeline.finders.FileSystemFinder'
+)
 
 DEFAULT_PER_PAGE = 20
 
@@ -97,3 +109,51 @@ CORS_URLS_REGEX = r'^/api/.*$'
 CORS_EXPOSE_HEADERS = []
 
 CORS_ALLOW_CREDENTIALS = True
+
+PIPELINE = {
+    'JAVASCRIPT': {
+        'vendor': {
+            'source_filenames': (
+                'user_site/vendor/jquery-3.4.1.min.js',
+                'user_site/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js',
+                'user_site/vendor/Scroller-2.0.0/js/dataTables.scroller.min.js',
+            ),
+            'output_filename': 'user_site/js/vendor.min.js'
+        },
+
+        'application': {
+            'source_filenames': (
+                'user_site/js/common.es6',
+                'user_site/js/person-rating.es6'
+            ),
+            'output_filename': 'user_site/application.min.js'
+        }
+    },
+
+    'STYLESHEETS': {
+        'application': {
+            'source_filenames': (
+                'user_site/scss/application.scss',
+            ),
+            'output_filename': 'user_site/application.min.css',
+            'extra_context': {
+                'media': 'all'
+            },
+        }
+    },
+
+    'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
+    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.YuglifyCompressor',
+    'YUGLIFY_BINARY': os.path.join(NODE_MODULES, '.bin', 'yuglify'),
+
+    'COMPILERS': (
+        'pipeline.compilers.sass.SASSCompiler',
+        'pipeline.compilers.es6.ES6Compiler'
+    ),
+
+    'SASS_BINARY': os.path.join(NODE_MODULES, '.bin', 'node-sass'),
+    'BABEL_BINARY': os.path.join(NODE_MODULES, '.bin', 'babel'),
+    'BABEL_ARGUMENTS': '--presets @babel/preset-env'
+}
+
+HTML_MINIFY = True

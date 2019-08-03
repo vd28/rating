@@ -25,3 +25,7 @@ class ConfigNotFoundView(TemplateView):
 
 class HomeView(ConfigMixin, TemplateView):
     template_name = 'user_site/home.html'
+
+
+class PersonRatingView(ConfigMixin, TemplateView):
+    template_name = 'user_site/person_rating.html'

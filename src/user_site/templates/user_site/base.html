@@ -1,19 +1,26 @@
+{% load pipeline %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     {% block meta_tags %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="endpoint" content="{{ request.path }}">
     {% endblock %}
 
     <title>{% block title %}Рейтинг{% endblock %}</title>
 
-    {% block styles %}{% endblock %}
+    {% block styles %}
+        {% stylesheet 'application' %}
+    {% endblock %}
 </head>
 <body>
 
 {% block content %}{% endblock %}
-{% block scripts %}{% endblock %}
+{% block scripts %}
+    {% javascript 'vendor' %}
+    {% javascript 'application' %}
+{% endblock %}
 
 </body>
 </html>

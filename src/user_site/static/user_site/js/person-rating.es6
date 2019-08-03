@@ -1,0 +1,2 @@
+onPageLoad('/rating/persons/', () => {
+});
