@@ -270,6 +270,8 @@ class PersonRatingBuilder(AbstractRatingBuilder):
     def __init__(self, snapshot_options: Options):
         super().__init__(snapshot_options)
         self.university_id = None
+        self.faculty_id = None
+        self.department_id = None
         self.person_type_ids = []
 
     def build_field_lookups(self):
@@ -279,6 +281,20 @@ class PersonRatingBuilder(AbstractRatingBuilder):
 
     def set_university(self, university_id: int) -> 'PersonRatingBuilder':
         self.university_id = university_id
+        self.faculty_id = None
+        self.department_id = None
+        return self
+
+    def set_faculty(self, faculty_id: int) -> 'PersonRatingBuilder':
+        self.university_id = None
+        self.faculty_id = faculty_id
+        self.department_id = None
+        return self
+
+    def set_department(self, department_id: int) -> 'PersonRatingBuilder':
+        self.university_id = None
+        self.faculty_id = None
+        self.department_id = department_id
         return self
 
     def set_person_types(self, person_type_ids: Iterable[int]) -> 'PersonRatingBuilder':
@@ -286,14 +302,25 @@ class PersonRatingBuilder(AbstractRatingBuilder):
         return self
 
     def get_queryset(self) -> models.QuerySet:
-        qs = core_models.Person.objects.filter(department__faculty__university_id=self.university_id)
+        qs = core_models.Person.objects.all()
+
+        if self.university_id is not None:
+            qs = qs.filter(department__faculty__university_id=self.university_id)
+
+        elif self.faculty_id is not None:
+            qs = qs.filter(department__faculty_id=self.faculty_id)
+
+        elif self.department_id is not None:
+            qs = qs.filter(department_id=self.department_id)
+
         if len(self.person_type_ids) > 0:
             qs = qs.filter(person_types__id__in=tuple(self.person_type_ids))
+
         return qs.distinct()
 
     def build(self):
-        if self.university_id is None:
-            raise ValueError('university must be set')
+        if [self.university_id, self.faculty_id, self.department_id].count(None) == 3:
+            raise ValueError('university, faculty or department must be set')
         return super().build()
 
     @classmethod
