@@ -58,4 +58,4 @@ class FacultyRatingOptionsSerializer(BaseRatingOptionsSerializer):
 
 
 class DepartmentRatingOptionsSerializer(BaseRatingOptionsSerializer):
-    faculty_id = serializers.IntegerField()
+    university_id = serializers.IntegerField()

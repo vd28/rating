@@ -66,7 +66,7 @@ class BaseRatingView(BaseView):
         builder.set_pagination(Pagination(page, limit))
 
         try:
-            result = self.build_rating(request, builder, options_serializer.data)
+            result = self.build_rating(request, builder, options_serializer.validated_data)
 
         except PageDoesNotExist as e:
             return ApiResponse.not_found(error_message=str(e))
@@ -138,5 +138,5 @@ class DepartmentRatingView(BaseRatingView):
     options_serializer = DepartmentRatingOptionsSerializer
 
     def build_rating(self, request: Request, builder: DepartmentRatingBuilder, options: Dict[str, Any]):
-        builder.set_faculty(options['faculty_id'])
+        builder.set_university(options['university_id'])
         return builder.build()

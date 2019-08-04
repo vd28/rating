@@ -150,7 +150,7 @@ class SemanticScholarSnapshot(AbstractSnapshot):
     @staticmethod
     def get_options():
         return Options(
-            name='semanticcholarsnapshot',
+            name='semanticscholarsnapshot',
             fields={'citation_velocity', 'influential_citation_count'},
             ordering=('-citation_velocity', '-influential_citation_count'),
         )

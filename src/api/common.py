@@ -1,6 +1,7 @@
 import platform
 from functools import wraps
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework import status, serializers
 from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
@@ -55,7 +56,14 @@ def parse_ordering(fn):
     return wrapped
 
 
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+
+    def enforce_csrf(self, request):
+        return False
+
+
 class BaseView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     renderer_classes = (JSONRenderer,)
 
 

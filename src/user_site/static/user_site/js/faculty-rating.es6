@@ -1,14 +1,4 @@
-onPageLoad('/rating/persons/', () => {
-
-  $('#peron-types-select').selectmenu({
-    change: (event, ui) => {
-      $('meta[name="person_type_id"]').attr('content', ui.item.value);
-      $('#scopus').DataTable().rows().invalidate('data').draw(false);
-      $('#google-scholar').DataTable().rows().invalidate('data').draw(false);
-      $('#semantic-scholar').DataTable().rows().invalidate('data').draw(false);
-      $('#wos').DataTable().rows().invalidate('data').draw(false);
-    }
-  });
+onPageLoad('/rating/faculties/', () => {
 
   $('#tabs').tabs();
 
@@ -27,10 +17,9 @@ onPageLoad('/rating/persons/', () => {
     ajax: (data, callback, settings) => {
 
       const params = $.param(buildPaginationParams(data));
-      const url = params ? '/api/rating/persons/?' + params : '/api/rating/persons/';
+      const url = params ? '/api/rating/faculties/?' + params : '/api/rating/faculties/';
       const revisionId = $('meta[name="revision_id"]').attr('content');
       const universityId = $('meta[name="university_id"]').attr('content');
-      const personTypeId = $('meta[name="person_type_id"]').attr('content');
 
       $.ajax({
         method: 'POST',
@@ -41,7 +30,6 @@ onPageLoad('/rating/persons/', () => {
           revision_type: settings.sTableId,
           revision_id: revisionId,
           university_id: universityId,
-          person_type_ids: personTypeId === '-1' ? [] : [personTypeId]
         }),
         success: response => {
           const payload = response.payload;
@@ -72,7 +60,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: 'dt-center'
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'name', data: 'name', targets: 0},
       {name: 'h_index', data: 'h_index', targets: 1},
       {name: 'documents', data: 'documents', targets: 2},
       {name: 'citations', data: 'citations', targets: 3}
@@ -87,7 +75,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'name', data: 'name', targets: 0},
       {name: 'h_index', data: 'h_index', targets: 1},
       {name: 'citations', data: 'citations', targets: 2}
     ]
@@ -101,7 +89,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'name', data: 'name', targets: 0},
       {name: 'citation_velocity', data: 'citation_velocity', targets: 1},
       {name: 'influential_citation_count', data: 'influential_citation_count', targets: 2}
     ]
@@ -115,7 +103,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'name', data: 'name', targets: 0},
       {name: 'publications', data: 'publications', targets: 1}
     ]
   }));

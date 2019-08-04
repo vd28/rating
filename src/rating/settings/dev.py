@@ -10,5 +10,3 @@ DATABASES = {
         config('DATABASE_URI', default='postgres://rating:rating@localhost:5432/rating_dev')
     )
 }
-
-UNIVERSITY_NAME = config('UNIVERSITY_NAME', default='KSU')

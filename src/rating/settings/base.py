@@ -115,30 +115,42 @@ PIPELINE = {
         'vendor': {
             'source_filenames': (
                 'user_site/vendor/jquery-3.4.1.min.js',
+                'user_site/vendor/jquery-ui-1.12.1/jquery-ui.js',
                 'user_site/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js',
                 'user_site/vendor/Scroller-2.0.0/js/dataTables.scroller.min.js',
+                'user_site/vendor/d3-4.13.0.js'
             ),
-            'output_filename': 'user_site/js/vendor.min.js'
+            'output_filename': 'user_site/vendor.js'
         },
 
         'application': {
             'source_filenames': (
                 'user_site/js/common.es6',
-                'user_site/js/person-rating.es6'
+                'user_site/js/person-rating.es6',
+                'user_site/js/faculty-rating.es6',
+                'user_site/js/department-rating.es6'
             ),
-            'output_filename': 'user_site/application.min.js'
+            'output_filename': 'user_site/application.js'
         }
     },
 
     'STYLESHEETS': {
+        'vendor': {
+            'source_filenames': (
+                'user_site/vendor/reset.css',
+                'user_site/vendor/jquery-ui-1.12.1/jquery-ui.css',
+                'user_site/vendor/DataTables-1.10.18/css/jquery.dataTables.min.css',
+                'user_site/vendor/Scroller-2.0.0/css/scroller.dataTables.min.css',
+                'user_site/vendor/fontawesome-5.0.12/css/all.css'
+            ),
+            'output_filename': 'user_site/vendor.css',
+        },
+
         'application': {
             'source_filenames': (
                 'user_site/scss/application.scss',
             ),
-            'output_filename': 'user_site/application.min.css',
-            'extra_context': {
-                'media': 'all'
-            },
+            'output_filename': 'user_site/application.css',
         }
     },
 
@@ -153,7 +165,5 @@ PIPELINE = {
 
     'SASS_BINARY': os.path.join(NODE_MODULES, '.bin', 'node-sass'),
     'BABEL_BINARY': os.path.join(NODE_MODULES, '.bin', 'babel'),
-    'BABEL_ARGUMENTS': '--presets @babel/preset-env'
+    'BABEL_ARGUMENTS': '--presets @babel/preset-env',
 }
-
-HTML_MINIFY = True

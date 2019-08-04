@@ -169,6 +169,7 @@ class DepartmentRatingBuilder(AbstractRatingBuilder):
 
     def __init__(self, snapshot_options: Options):
         super().__init__(snapshot_options)
+        self.university_id = None
         self.faculty_id = None
 
     def build_field_lookups(self):
@@ -176,16 +177,30 @@ class DepartmentRatingBuilder(AbstractRatingBuilder):
         fields_map.update({'name': 'name'})
         return fields_map
 
+    def set_university(self, university_id: int) -> 'DepartmentRatingBuilder':
+        self.university_id = university_id
+        self.faculty_id = None
+        return self
+
     def set_faculty(self, faculty_id: int) -> 'DepartmentRatingBuilder':
+        self.university_id = None
         self.faculty_id = faculty_id
         return self
 
     def get_queryset(self) -> models.QuerySet:
-        return core_models.Department.objects.filter(faculty_id=self.faculty_id).distinct()
+        qs = core_models.Department.objects.all()
+
+        if self.university_id is not None:
+            qs = qs.filter(faculty__university_id=self.university_id)
+
+        elif self.faculty_id is not None:
+            qs = qs.filter(faculty_id=self.faculty_id)
+
+        return qs.distinct()
 
     def build(self):
-        if self.faculty_id is None:
-            raise ValueError('faculty must be set')
+        if [self.university_id, self.faculty_id].count(None) == 2:
+            raise ValueError('university or faculty must be set')
         return super().build()
 
     def annotate(self, qs: models.QuerySet) -> models.QuerySet:
