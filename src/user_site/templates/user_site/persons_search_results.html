@@ -1,0 +1,18 @@
+{% extends 'user_site/base.html' %}
+
+{% block title %}Результати пошуку{% endblock %}
+
+{% block content %}
+    <div class="card">
+        {% if persons %}
+            <h3>Результати пошуку</h3>
+            {% for person in persons %}
+                <p class="text">
+                    <a href="#">{{ person.full_name }}</a>
+                </p>
+            {% endfor %}
+        {% else %}
+            <p class="text">За Вашим запитом нічого не знайдено.</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -51,3 +51,12 @@ class FacultyRatingView(ConfigMixin, TemplateView):
 
 class DepartmentRatingView(ConfigMixin, TemplateView):
     template_name = 'user_site/department_rating.html'
+
+
+class PersonsSearchResultsView(ConfigMixin, TemplateView):
+    template_name = 'user_site/persons_search_results.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['persons'] = tuple(core_queries.search_persons(self.request.GET.get('t', None)))
+        return data
