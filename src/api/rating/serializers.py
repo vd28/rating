@@ -34,7 +34,7 @@ class PersonSerializer(BaseRatingSerializer):
     person_type_ids = serializers.SerializerMethodField()
 
     def get_person_type_ids(self, instance):
-        return instance.person_types.all().values_list('id', flat=True)
+        return [person_type.id for person_type in instance.person_types.all()]
 
 
 class BaseRatingOptionsSerializer(serializers.Serializer):

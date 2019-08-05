@@ -62,6 +62,7 @@ class Results:
 class AbstractRatingBuilder:
     path_to_snapshot = '{snapshot}__{field}'
     search_lookups = ()
+    prefetch_related = ()
 
     def __init__(self, snapshot_options: Options):
         self.options = snapshot_options
@@ -82,6 +83,9 @@ class AbstractRatingBuilder:
         qs = self.search(qs)
         total = qs.count()
         qs = self.paginate(qs)
+
+        for lookup in self.prefetch_related:
+            qs = qs.prefetch_related(lookup)
 
         objects = tuple(qs)
         pagination = self.pagination or Pagination(page=1, limit=total or 1)
@@ -266,6 +270,8 @@ class PersonRatingBuilder(AbstractRatingBuilder):
         'google_scholar_key__exact', 'semantic_scholar_key__exact',
         'wos_key__exact'
     )
+
+    prefetch_related = ('person_types',)
 
     def __init__(self, snapshot_options: Options):
         super().__init__(snapshot_options)

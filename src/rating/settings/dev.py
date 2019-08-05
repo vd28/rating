@@ -10,3 +10,20 @@ DATABASES = {
         config('DATABASE_URI', default='postgres://rating:rating@localhost:5432/rating_dev')
     )
 }
+
+LOGGING = {
+    'disable_existing_loggers': False,
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console']
+        },
+    },
+}

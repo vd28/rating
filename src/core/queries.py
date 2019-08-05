@@ -1,21 +1,19 @@
 from typing import Union
-
-from django.db.models import QuerySet, Q
-
-from . import models
+from django.db import models
+from .models import Revision, PersonType, Person, Faculty
 
 
-def fetch_latest_revision() -> Union[models.Revision, None]:
-    return models.Revision.objects.order_by('-created_at').first()
+def fetch_latest_revision() -> Union[Revision, None]:
+    return Revision.objects.order_by('-created_at').first()
 
 
-def fetch_person_types() -> QuerySet:
-    return models.PersonType.objects.prefetch_related('persons').order_by('name')
+def fetch_person_types() -> models.QuerySet:
+    return PersonType.objects.prefetch_related('persons').order_by('name')
 
 
-def search_persons(term: str) -> QuerySet:
+def search_persons(term: str) -> models.QuerySet:
     if not term:
-        return models.Person.objects.none()
+        return Person.objects.none()
 
     search_lookups = (
         'full_name__icontains',
@@ -26,8 +24,23 @@ def search_persons(term: str) -> QuerySet:
         'wos_key__exact'
     )
 
-    cond = Q(**{search_lookups[0]: term})
+    cond = models.Q(**{search_lookups[0]: term})
     for lookup in search_lookups[1:]:
-        cond |= Q(**{lookup: term})
+        cond |= models.Q(**{lookup: term})
 
-    return models.Person.objects.filter(cond)
+    return Person.objects.filter(cond)
+
+
+def fetch_faculties(university_id: int, annotate: bool = False) -> models.QuerySet:
+    qs = Faculty.objects.filter(university_id=university_id)
+
+    if annotate:
+        qs = qs.annotate(
+            orcid=models.Count('department__person__orcid'),
+            scopus=models.Count('department__person__scopus_key'),
+            google_scholar=models.Count('department__person__google_scholar_key'),
+            semantic_scholar=models.Count('department__person__semantic_scholar_key'),
+            wos=models.Count('department__person__wos_key')
+        )
+
+    return qs
