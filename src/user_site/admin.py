@@ -11,5 +11,5 @@ class ConfigAdmin(admin.ModelAdmin):
     autocomplete_fields = ('university',)
 
     def save_model(self, request, obj, form, change):
-        models.Config.objects.update(active=False)
+        models.Config.objects.select_for_update().filter(active=True).update(active=False)
         super().save_model(request, obj, form, change)
