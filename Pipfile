@@ -13,8 +13,9 @@ psycopg2 = "*"
 django-nested-admin = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
-django-pipeline = "*"
 django-htmlmin = "*"
+django-compressor = "*"
+django-compressor-autoprefixer = "*"
 
 [requires]
 python_version = "3.6"

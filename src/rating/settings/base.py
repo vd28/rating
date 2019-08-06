@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'nested_admin',
     'corsheaders',
     'rest_framework',
-    'pipeline',
+    'compressor',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -91,13 +91,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'pipeline.finders.PipelineFinder',
-    'pipeline.finders.FileSystemFinder'
+    'compressor.finders.CompressorFinder'
 )
 
 DEFAULT_PER_PAGE = 20
@@ -110,60 +107,26 @@ CORS_EXPOSE_HEADERS = []
 
 CORS_ALLOW_CREDENTIALS = True
 
-PIPELINE = {
-    'JAVASCRIPT': {
-        'vendor': {
-            'source_filenames': (
-                'user_site/vendor/jquery-3.4.1.min.js',
-                'user_site/vendor/jquery-ui-1.12.1/jquery-ui.js',
-                'user_site/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js',
-                'user_site/vendor/Scroller-2.0.0/js/dataTables.scroller.min.js',
-                'user_site/vendor/d3-4.13.0.js'
-            ),
-            'output_filename': 'user_site/vendor.js'
-        },
+COMPRESS_OFFLINE = True
 
-        'application': {
-            'source_filenames': (
-                'user_site/js/common.es6',
-                'user_site/js/person-rating.es6',
-                'user_site/js/faculty-rating.es6',
-                'user_site/js/department-rating.es6'
-            ),
-            'output_filename': 'user_site/application.js'
-        }
-    },
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', f'{os.path.join(NODE_MODULES, ".bin", "node-sass")} {{infile}} > {{outfile}}'),
+    ('text/es6', f'{os.path.join(NODE_MODULES, ".bin", "babel")} --presets @babel/preset-env {{infile}} > {{outfile}}')
+)
 
-    'STYLESHEETS': {
-        'vendor': {
-            'source_filenames': (
-                'user_site/vendor/reset.css',
-                'user_site/vendor/jquery-ui-1.12.1/jquery-ui.css',
-                'user_site/vendor/DataTables-1.10.18/css/jquery.dataTables.min.css',
-                'user_site/vendor/Scroller-2.0.0/css/scroller.dataTables.min.css',
-                'user_site/vendor/fontawesome-5.0.12/css/all.css'
-            ),
-            'output_filename': 'user_site/vendor.css',
-        },
+COMPRESS_CSS_HASHING_METHOD = 'content'
 
-        'application': {
-            'source_filenames': (
-                'user_site/scss/application.scss',
-            ),
-            'output_filename': 'user_site/application.css',
-        }
-    },
-
-    'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
-    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.YuglifyCompressor',
-    'YUGLIFY_BINARY': os.path.join(NODE_MODULES, '.bin', 'yuglify'),
-
-    'COMPILERS': (
-        'pipeline.compilers.sass.SASSCompiler',
-        'pipeline.compilers.es6.ES6Compiler'
+COMPRESS_FILTERS = {
+    'css': (
+        'django_compressor_autoprefixer.AutoprefixerFilter',
+        'compressor.filters.css_default.CssRelativeFilter',
+        'compressor.filters.yuglify.YUglifyCSSFilter'
     ),
-
-    'SASS_BINARY': os.path.join(NODE_MODULES, '.bin', 'node-sass'),
-    'BABEL_BINARY': os.path.join(NODE_MODULES, '.bin', 'babel'),
-    'BABEL_ARGUMENTS': '--presets @babel/preset-env',
+    'js': (
+        'compressor.filters.yuglify.YUglifyJSFilter',
+    )
 }
+
+COMPRESS_YUGLIFY_BINARY = os.path.join(NODE_MODULES, '.bin', 'yuglify')
+
+COMPRESS_AUTOPREFIXER_BINARY = os.path.join(NODE_MODULES, '.bin', 'postcss')
