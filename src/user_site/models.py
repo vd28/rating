@@ -7,6 +7,13 @@ class Config(models.Model):
         verbose_name = 'configuration'
         verbose_name_plural = 'configurations'
         unique_together = ('university', 'revision')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['active'],
+                condition=models.Q(active=True),
+                name='one_active'
+            )
+        ]
 
     revision = models.ForeignKey(Revision, on_delete=models.PROTECT)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
