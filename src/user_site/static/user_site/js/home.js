@@ -117,6 +117,7 @@ onPageLoad('/', () => {
     url: `/api/universities/${universityId}/faculties/stats/`,
     contentType: 'application/json',
     dataType: 'json',
+    cache: false,
     success: response => {
 
       buildChart('chart', response.payload);

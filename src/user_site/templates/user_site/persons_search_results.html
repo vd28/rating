@@ -8,7 +8,7 @@
             <h3>Результати пошуку</h3>
             {% for person in persons %}
                 <p class="text">
-                    <a href="#">{{ person.full_name }}</a>
+                    <a href="{% url 'person' person_id=person.id %}">{{ person.full_name }}</a>
                 </p>
             {% endfor %}
         {% else %}

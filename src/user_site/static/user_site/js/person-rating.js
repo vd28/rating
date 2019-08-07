@@ -45,6 +45,9 @@ onPageLoad('/rating/persons/', () => {
         }),
         success: response => {
           const payload = response.payload;
+          payload.rating.forEach(person => {
+            person.linkEl = `<a href="/persons/${person.id}/">${person.full_name}</a>`
+          });
           callback({
             draw: data.draw,
             recordsTotal: payload.total,
@@ -72,7 +75,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: 'dt-center'
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'full_name', data: 'linkEl', targets: 0},
       {name: 'h_index', data: 'h_index', targets: 1},
       {name: 'documents', data: 'documents', targets: 2},
       {name: 'citations', data: 'citations', targets: 3}
@@ -87,7 +90,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'full_name', data: 'linkEl', targets: 0},
       {name: 'h_index', data: 'h_index', targets: 1},
       {name: 'citations', data: 'citations', targets: 2}
     ]
@@ -101,7 +104,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'full_name', data: 'linkEl', targets: 0},
       {name: 'citation_velocity', data: 'citation_velocity', targets: 1},
       {name: 'influential_citation_count', data: 'influential_citation_count', targets: 2}
     ]
@@ -115,7 +118,7 @@ onPageLoad('/rating/persons/', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'full_name', data: 'full_name', targets: 0},
+      {name: 'full_name', data: 'linkEl', targets: 0},
       {name: 'publications', data: 'publications', targets: 1}
     ]
   }));

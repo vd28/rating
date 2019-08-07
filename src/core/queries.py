@@ -44,3 +44,10 @@ def fetch_faculties(university_id: int, annotate: bool = False) -> models.QueryS
         )
 
     return qs
+
+
+def fetch_person(person_id: int, load_university: bool = False) -> Person:
+    qs = Person.objects.all()
+    if load_university:
+        qs = qs.select_related('department__faculty__university')
+    return qs.get(id=person_id)
