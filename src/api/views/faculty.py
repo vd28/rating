@@ -1,8 +1,8 @@
 from rest_framework.request import Request
 
-from api.common import BaseView, ApiResponse
 from core import queries
-from .serializers import FacultySerializer
+from api.common import BaseView, ApiResponse
+from api.serializers.faculty import FacultySerializer
 
 
 class FacultyStatsView(BaseView):

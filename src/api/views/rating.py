@@ -10,9 +10,10 @@ from core.rating_builder import (
     AbstractRatingBuilder, PersonRatingBuilder, DepartmentRatingBuilder, FacultyRatingBuilder,
     Pagination, PageDoesNotExist, FieldDoesNotExist
 )
-from api.common import BaseView, ApiResponse, parse_ordering, parse_pagination, parse_search_term
-from .serializers import (
-    PersonSerializer, DepartmentSerializer, FacultySerializer, BaseRatingOptionsSerializer,
+from api.common import BaseView, ApiResponse
+from api.decorators import parse_ordering, parse_pagination, parse_search_term
+from api.serializers.rating import (
+    PersonRatingSerializer, DepartmentRatingSerializer, FacultyRatingSerializer, BaseRatingOptionsSerializer,
     PersonRatingOptionsSerializer, FacultyRatingOptionsSerializer, DepartmentRatingOptionsSerializer
 )
 
@@ -111,19 +112,28 @@ class BaseRatingView(BaseView):
 class PersonRatingView(BaseRatingView):
 
     builder = PersonRatingBuilder
-    rating_serializer = PersonSerializer
+    rating_serializer = PersonRatingSerializer
     options_serializer = PersonRatingOptionsSerializer
 
     def build_rating(self, request: Request, builder: PersonRatingBuilder, options: Dict[str, Any]):
-        builder.set_university(options['university_id'])
         builder.set_person_types(options.get('person_type_ids', ()))
+
+        if 'university_id' in options:
+            builder.set_university(options['university_id'])
+
+        elif 'faculty_id' in options:
+            builder.set_faculty(options['faculty_id'])
+
+        else:
+            builder.set_department(options['department_id'])
+
         return builder.build()
 
 
 class FacultyRatingView(BaseRatingView):
 
     builder = FacultyRatingBuilder
-    rating_serializer = FacultySerializer
+    rating_serializer = FacultyRatingSerializer
     options_serializer = FacultyRatingOptionsSerializer
 
     def build_rating(self, request: Request, builder: FacultyRatingBuilder, options: Dict[str, Any]):
@@ -134,9 +144,14 @@ class FacultyRatingView(BaseRatingView):
 class DepartmentRatingView(BaseRatingView):
 
     builder = DepartmentRatingBuilder
-    rating_serializer = DepartmentSerializer
+    rating_serializer = DepartmentRatingSerializer
     options_serializer = DepartmentRatingOptionsSerializer
 
     def build_rating(self, request: Request, builder: DepartmentRatingBuilder, options: Dict[str, Any]):
-        builder.set_university(options['university_id'])
+        if 'university_id' in options:
+            builder.set_university(options['university_id'])
+
+        else:
+            builder.set_faculty(options['faculty_id'])
+
         return builder.build()
