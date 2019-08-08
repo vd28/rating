@@ -1,19 +1,5 @@
-from typing import Type
 from rest_framework import serializers
-from core import models
-
-
-class BaseRatingSerializer(serializers.Serializer):
-
-    @classmethod
-    def adjust(cls, snapshot_model: Type[models.AbstractSnapshot]):
-        assert issubclass(snapshot_model, models.AbstractSnapshot)
-        assert not issubclass(cls, serializers.ModelSerializer)
-        options = snapshot_model.get_options()
-        attrs = {}
-        for field in options.fields:
-            attrs[field] = serializers.IntegerField(source=f'{options.name}_{field}', required=False)
-        return type('SnapshotSerializer', (cls,), attrs)
+from . import BaseRatingSerializer
 
 
 class FacultyRatingSerializer(BaseRatingSerializer):
@@ -43,10 +29,10 @@ class BaseRatingOptionsSerializer(serializers.Serializer):
     GOOGLE_SCHOLAR = 'google-scholar'
     SEMANTIC_SCHOLAR = 'semantic-scholar'
     WOS = 'wos'
-    REVISION_TYPES = (SCOPUS, GOOGLE_SCHOLAR, SEMANTIC_SCHOLAR, WOS)
+    SNAPSHOTS = (SCOPUS, GOOGLE_SCHOLAR, SEMANTIC_SCHOLAR, WOS)
 
     revision_id = serializers.IntegerField(required=False)
-    revision_type = serializers.ChoiceField(choices=REVISION_TYPES)
+    snapshot = serializers.ChoiceField(choices=SNAPSHOTS)
 
 
 class PersonRatingOptionsSerializer(BaseRatingOptionsSerializer):
@@ -57,8 +43,9 @@ class PersonRatingOptionsSerializer(BaseRatingOptionsSerializer):
 
     def validate(self, attrs):
         if [attrs.get('university_id'), attrs.get('faculty_id'), attrs.get('department_id')].count(None) != 2:
-            raise serializers.ValidationError("One of these fields are required: "
-                                              "'university_id', 'faculty_id' or 'department_id'.")
+            raise serializers.ValidationError(
+                "One of these fields are required: 'university_id', 'faculty_id' or 'department_id'."
+            )
         return attrs
 
 

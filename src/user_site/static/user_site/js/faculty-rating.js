@@ -27,7 +27,7 @@ onPageLoad('/rating/faculties/', () => {
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({
-          revision_type: settings.sTableId,
+          snapshot: settings.sTableId,
           revision_id: revisionId,
           university_id: universityId,
         }),

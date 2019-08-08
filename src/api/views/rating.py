@@ -12,6 +12,7 @@ from core.rating_builder import (
 )
 from api.common import BaseView, ApiResponse
 from api.decorators import parse_ordering, parse_pagination, parse_search_term
+from api.serializers import BaseRatingSerializer
 from api.serializers.rating import (
     PersonRatingSerializer, DepartmentRatingSerializer, FacultyRatingSerializer, BaseRatingOptionsSerializer,
     PersonRatingOptionsSerializer, FacultyRatingOptionsSerializer, DepartmentRatingOptionsSerializer
@@ -55,8 +56,8 @@ class BaseRatingView(BaseView):
                 })
             revision_id = revision.id
 
-        revision_type = options_serializer.validated_data.get('revision_type')
-        snapshot_model = self.snapshot_model_mapping[revision_type]
+        snapshot = options_serializer.validated_data.get('snapshot')
+        snapshot_model = self.snapshot_model_mapping[snapshot]
         term = kwargs.pop('search_term', None)
         ordering = kwargs.pop('ordering', None)
 
@@ -78,7 +79,7 @@ class BaseRatingView(BaseView):
         if isinstance(result, Response):
             return result
 
-        rating_serializer = self.get_rating_serializer().adjust(snapshot_model)(result.objects, many=True)
+        rating_serializer = BaseRatingSerializer.adjust(snapshot_model)(result.objects, many=True)
 
         return ApiResponse.ok(payload={
             'page': result.page,
