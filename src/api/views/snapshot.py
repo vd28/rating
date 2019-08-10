@@ -3,9 +3,9 @@ from django.utils import timezone
 
 from rest_framework.request import Request
 
-from core.models import ScopusSnapshot, GoogleScholarSnapshot, SemanticScholarSnapshot, WosSnapshot, Revision
+from core.models import ScopusSnapshot, GoogleScholarSnapshot, SemanticScholarSnapshot, WosSnapshot
 from api.common import BaseView, ApiResponse
-from api.serializers import BaseSnapshotSerializer
+from api.serializers.snapshot import BaseSnapshotSerializer
 
 
 def _noop(qs: QuerySet) -> QuerySet:
@@ -59,7 +59,7 @@ class SnapshotListView(BaseView):
         data = {}
         for snapshot in snapshots:
             model = self.snapshot_model_mapping[snapshot]
-            qs = filter_period(model.objects.filter(person_id=person_id)).order_by('-revision__created_at')
+            qs = filter_period(model.objects.filter(person_id=person_id)).order_by('revision__created_at')
             serializer = BaseSnapshotSerializer.adjust(model)(qs, many=True)
             data[snapshot] = serializer.data
 

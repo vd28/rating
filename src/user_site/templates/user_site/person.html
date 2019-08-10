@@ -42,48 +42,59 @@
         </table>
     </div>
 
-    {% if person.scopus_key %}
-        <div class="card">
-            <h3>Scopus</h3>
+    <div class="card">
+        <h3>Scopus</h3>
+
+        {% if person.scopus_key %}
 
             <table class="s-table">
                 <tbody>
                 <tr>
                     <td>ID:</td>
                     <td>
-                        <a target="_blank" href="https://www.scopus.com/authid/detail.uri?authorId={{ person.scopus_key }}">
+                        <a target="_blank"
+                           href="https://www.scopus.com/authid/detail.uri?authorId={{ person.scopus_key }}">
                             {{ person.scopus_key }}
                         </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+        {% endif %}
+
+        <div class="chart-wrap">
+            <div id="scopus" class="chart"></div>
         </div>
-    {% endif %}
+    </div>
 
-    {% if person.google_scholar_key %}
-        <div class="card">
-            <h3>Google Scholar</h3>
+    <div class="card">
+        <h3>Google Scholar</h3>
 
+        {% if person.google_scholar_key %}
             <table class="s-table">
                 <tbody>
                 <tr>
                     <td>ID:</td>
                     <td>
-                        <a target="_blank" href="https://scholar.google.com.ua/citations?hl=ru&user={{ person.google_scholar_key }}">
+                        <a target="_blank"
+                           href="https://scholar.google.com.ua/citations?hl=ru&user={{ person.google_scholar_key }}">
                             {{ person.google_scholar_key }}
                         </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+        {% endif %}
+
+        <div class="chart-wrap">
+            <div id="google-scholar" class="chart"></div>
         </div>
-    {% endif %}
+    </div>
 
-    {% if person.wos_key %}
-        <div class="card">
-            <h3>Web of Science</h3>
+    <div class="card">
+        <h3>Web of Science</h3>
 
+        {% if person.wos_key %}
             <table class="s-table">
                 <tbody>
                 <tr>
@@ -96,13 +107,17 @@
                 </tr>
                 </tbody>
             </table>
+        {% endif %}
+
+        <div class="chart-wrap">
+            <div id="wos" class="chart"></div>
         </div>
-    {% endif %}
+    </div>
 
-    {% if person.semantic_scholar_key %}
-        <div class="card">
-            <h3>Semantic Scholar</h3>
+    <div class="card">
+        <h3>Semantic Scholar</h3>
 
+        {% if person.semantic_scholar_key %}
             <table class="s-table">
                 <tbody>
                 <tr>
@@ -111,6 +126,11 @@
                 </tr>
                 </tbody>
             </table>
+        {% endif %}
+
+        <div class="chart-wrap">
+            <div id="semantic-scholar" class="chart"></div>
         </div>
-    {% endif %}
+    </div>
+
 {% endblock %}

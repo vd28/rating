@@ -1,4 +1,4 @@
-onPageLoad('/rating/persons/', () => {
+onPageLoad('person_rating', () => {
 
   $('#peron-types-select').selectmenu({
     change: (event, ui) => {

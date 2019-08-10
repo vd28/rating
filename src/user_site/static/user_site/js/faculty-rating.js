@@ -1,4 +1,4 @@
-onPageLoad('/rating/faculties/', () => {
+onPageLoad('faculty_rating', () => {
 
   $('#tabs').tabs();
 

@@ -1,6 +1,6 @@
-onPageLoad('/', () => {
+onPageLoad('home', () => {
 
-  function buildChart(selector, data, src) {
+  function buildChart(selector, data) {
 
     const scopusData = [];
     const googleScholarData = [];

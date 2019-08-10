@@ -61,11 +61,3 @@ $(() => {
 $(() => {
   $('#footer-current-year').text(new Date().getFullYear());
 });
-
-$(window).resize(function () {
-  clearTimeout(this.timer);
-  this.timer = setTimeout(() => {
-    console.log('Trigger resizeEnd');
-    $(this).trigger('resizeEnd');
-  }, 500);
-});

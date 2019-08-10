@@ -12,7 +12,6 @@ from core.rating_builder import (
 )
 from api.common import BaseView, ApiResponse
 from api.decorators import parse_ordering, parse_pagination, parse_search_term
-from api.serializers import BaseRatingSerializer
 from api.serializers.rating import (
     PersonRatingSerializer, DepartmentRatingSerializer, FacultyRatingSerializer, BaseRatingOptionsSerializer,
     PersonRatingOptionsSerializer, FacultyRatingOptionsSerializer, DepartmentRatingOptionsSerializer
@@ -79,7 +78,7 @@ class BaseRatingView(BaseView):
         if isinstance(result, Response):
             return result
 
-        rating_serializer = BaseRatingSerializer.adjust(snapshot_model)(result.objects, many=True)
+        rating_serializer = self.get_rating_serializer().adjust(snapshot_model)(result.objects, many=True)
 
         return ApiResponse.ok(payload={
             'page': result.page,
@@ -111,7 +110,6 @@ class BaseRatingView(BaseView):
 
 
 class PersonRatingView(BaseRatingView):
-
     builder = PersonRatingBuilder
     rating_serializer = PersonRatingSerializer
     options_serializer = PersonRatingOptionsSerializer
@@ -132,7 +130,6 @@ class PersonRatingView(BaseRatingView):
 
 
 class FacultyRatingView(BaseRatingView):
-
     builder = FacultyRatingBuilder
     rating_serializer = FacultyRatingSerializer
     options_serializer = FacultyRatingOptionsSerializer
@@ -143,7 +140,6 @@ class FacultyRatingView(BaseRatingView):
 
 
 class DepartmentRatingView(BaseRatingView):
-
     builder = DepartmentRatingBuilder
     rating_serializer = DepartmentRatingSerializer
     options_serializer = DepartmentRatingOptionsSerializer
