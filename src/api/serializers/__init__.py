@@ -17,6 +17,9 @@ class BaseRatingSerializer(serializers.Serializer):
 
 class BaseSnapshotSerializer(serializers.Serializer):
 
+    revision_id = serializers.IntegerField()
+    person_id = serializers.IntegerField()
+
     @classmethod
     def adjust(cls, snapshot_model: Type[models.AbstractSnapshot]):
         assert issubclass(snapshot_model, models.AbstractSnapshot)
