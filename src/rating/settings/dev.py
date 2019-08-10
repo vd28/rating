@@ -14,8 +14,14 @@ DATABASES = {
 LOGGING = {
     'disable_existing_loggers': False,
     'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
     'handlers': {
         'console': {
+            'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'level': 'DEBUG'
         }

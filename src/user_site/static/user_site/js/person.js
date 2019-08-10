@@ -157,4 +157,66 @@ onPageLoad('person', () => {
     }
   });
 
+  $('#articles').DataTable({
+    order: [[0, 'asc']],
+    columnDefs: [
+      {
+        targets: [1, 2, 3, 4],
+        searchable: false,
+        orderable: false,
+        className: 'dt-center',
+        width: '13%'
+      },
+      {
+        targets: [0],
+        width: '48%'
+      },
+      {name: 'title', data: 'title', targets: 0},
+      {name: 'scopus', data: 'scopus', targets: 1},
+      {name: 'google_scholar', data: 'google_scholar', targets: 2},
+      {name: 'wos', data: 'wos', targets: 3},
+      {name: 'semantic_scholar', data: 'semantic_scholar', targets: 4}
+    ],
+    dom: 'lfr<"data-table-wrap"t>ip',
+    pageMenu: [10, 25, 50, 100],
+    pageLength: 25,
+    language: {
+      paginate: {
+        next: '&#8594;',
+        previous: '&#8592;'
+      }
+    },
+    processing: true,
+    serverSide: true,
+    ajax: (data, callback, settings) => {
+
+      const personId = $('meta[name="person_id"]').attr('content');
+
+      $.ajax({
+        method: 'GET',
+        url: `/api/persons/${personId}/articles/`,
+        contentType: 'application/json',
+        dataType: 'json',
+        data: buildPaginationParams(data),
+        success: response => {
+          const payload = response.payload;
+          callback({
+            draw: data.draw,
+            recordsTotal: payload.total,
+            recordsFiltered: payload.total,
+            data: payload.articles
+          });
+        },
+        error: () => {
+          callback({
+            draw: data.draw,
+            recordsTotal: 0,
+            recordsFiltered: 0,
+            data: []
+          })
+        }
+      });
+    }
+  });
+
 });

@@ -1,6 +1,6 @@
 from typing import Union
 from django.db import models
-from .models import Revision, PersonType, Person, Faculty
+from .models import Revision, PersonType, Person, Faculty, ArticleItem
 
 
 def fetch_latest_revision() -> Union[Revision, None]:
@@ -51,3 +51,7 @@ def fetch_person(person_id: int, load_university: bool = False) -> Person:
     if load_university:
         qs = qs.select_related('department__faculty__university')
     return qs.get(id=person_id)
+
+
+def fetch_articles(person_id: int) -> models.QuerySet:
+    return ArticleItem.objects.select_related('person', 'article').filter(person_id=person_id)

@@ -1,11 +1,9 @@
 from typing import Type
+
 from rest_framework import serializers
+
 from core import models
-
-
-class RevisionSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    created_at = serializers.DateTimeField(read_only=True)
+from .revision import RevisionSerializer
 
 
 class BaseSnapshotSerializer(serializers.Serializer):

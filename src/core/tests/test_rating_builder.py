@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
 from django.test import TestCase
+from ..pagination import Pagination, PageDoesNotExist
 from .. import rating_builder, models
 
 
@@ -39,7 +40,7 @@ class PersonRatingBuilderTestCase(TestCase):
             self.assertEqual(params[2], person.scopussnapshot_citations)
 
     def test_pagination(self):
-        for pagination, count in ((rating_builder.Pagination(1, 7), 7), (rating_builder.Pagination(2, 7), 2)):
+        for pagination, count in ((Pagination(1, 7), 7), (Pagination(2, 7), 2)):
 
             self.builder.set_pagination(pagination)
             result = self.builder.build()
@@ -57,8 +58,8 @@ class PersonRatingBuilderTestCase(TestCase):
                 self.assertEqual(params[1], person.scopussnapshot_documents)
                 self.assertEqual(params[2], person.scopussnapshot_citations)
 
-        self.builder.set_pagination(rating_builder.Pagination(2, 9))
-        with self.assertRaises(rating_builder.PageDoesNotExist):
+        self.builder.set_pagination(Pagination(2, 9))
+        with self.assertRaises(PageDoesNotExist):
             self.builder.build()
 
     def test_custom_ordering(self):

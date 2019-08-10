@@ -6,9 +6,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from core import models, queries
+from core.pagination import Pagination, PageDoesNotExist, FieldDoesNotExist
 from core.rating_builder import (
-    AbstractRatingBuilder, PersonRatingBuilder, DepartmentRatingBuilder, FacultyRatingBuilder,
-    Pagination, PageDoesNotExist, FieldDoesNotExist
+    AbstractRatingBuilder, PersonRatingBuilder, DepartmentRatingBuilder, FacultyRatingBuilder
 )
 from api.common import BaseView, ApiResponse
 from api.decorators import parse_ordering, parse_pagination, parse_search_term

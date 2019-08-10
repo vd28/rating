@@ -59,7 +59,9 @@ class SnapshotListView(BaseView):
         data = {}
         for snapshot in snapshots:
             model = self.snapshot_model_mapping[snapshot]
-            qs = filter_period(model.objects.filter(person_id=person_id)).order_by('revision__created_at')
+            qs = filter_period(model.objects.filter(person_id=person_id)) \
+                .select_related('revision') \
+                .order_by('revision__created_at')
             serializer = BaseSnapshotSerializer.adjust(model)(qs, many=True)
             data[snapshot] = serializer.data
 
