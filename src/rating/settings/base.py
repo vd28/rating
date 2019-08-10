@@ -13,11 +13,6 @@ DEBUG = False
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    'nested_admin',
-    'corsheaders',
-    'rest_framework',
-    'compressor',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -25,12 +20,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'nested_admin',
+    'corsheaders',
+    'rest_framework',
+    'compressor',
+    'debug_toolbar',
+
     'core',
     'api',
     'user_site'
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -130,3 +132,12 @@ COMPRESS_FILTERS = {
 COMPRESS_YUGLIFY_BINARY = os.path.join(NODE_MODULES, '.bin', 'yuglify')
 
 COMPRESS_AUTOPREFIXER_BINARY = os.path.join(NODE_MODULES, '.bin', 'postcss')
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_COLLAPSED': True,
+    'SQL_WARNING_THRESHOLD': 100
+}
