@@ -1,7 +1,7 @@
 ## Deployment
 1. Install **docker** and **docker-compose** before deployment.
 
-2. Create **.env.db** file in project root and with following content:
+2. Create **.env.db** file in project root with following content:
 
     ```
     POSTGRES_USER=<user name>
