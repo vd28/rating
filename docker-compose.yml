@@ -11,6 +11,7 @@ services:
     env_file: .env.web
     depends_on:
       - db
+
   db:
     image: postgres:10.7
     volumes:

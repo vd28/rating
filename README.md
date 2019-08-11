@@ -14,8 +14,6 @@
     ```
     SECRET_KEY=<long and hard to guess string>
     DATABASE_URI=postgres://<database name>:<database password>@db:5432/<database name>
-    DB_HOST=db
-    DB_PORT=5432
     ```
 
 4. Run `docker-compose up -d --build` in project root.
