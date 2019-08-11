@@ -17,6 +17,7 @@ django-htmlmin = "*"
 django-compressor = "*"
 django-compressor-autoprefixer = "*"
 django-debug-toolbar = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.6"

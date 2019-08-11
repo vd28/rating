@@ -5,3 +5,5 @@ __pycache__
 /src/rating/static
 
 node_modules
+.env
+.env.*

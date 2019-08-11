@@ -1,0 +1,17 @@
+.idea
+.git
+
+*.pyc
+__pycache__
+/src/rating/static
+/infrastructure
+
+node_modules
+Dockerfile
+nginx.conf
+docker-compose.yml
+.gitignore
+.editorconfig
+.dockerignore
+.env
+.env.*

@@ -7,7 +7,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda val: list(map(lambda x: x.strip(), val.split(','))), default=['*'])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda val: [x.strip() for x in val.split(',')], default='*')
 
 DATABASES = {
     'default': parse_db_connection_string(config('DATABASE_URI'))
