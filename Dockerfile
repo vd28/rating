@@ -1,8 +1,5 @@
 FROM nikolaik/python-nodejs:python3.6-nodejs12
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
 WORKDIR /app/
 
 COPY ./package.json ./package-lock.json ./
