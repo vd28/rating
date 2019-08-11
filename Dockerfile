@@ -1,5 +1,7 @@
 FROM nikolaik/python-nodejs:python3.6-nodejs12
 
+RUN apt-get update && apt-get install -yqq netcat
+
 WORKDIR /app/
 
 COPY ./package.json ./package-lock.json ./
