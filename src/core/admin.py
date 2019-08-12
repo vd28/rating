@@ -71,7 +71,7 @@ class PersonAdmin(admin.ModelAdmin):
             'fields': ('orcid', 'scopus_key', 'google_scholar_key', 'semantic_scholar_key', 'wos_key')
         })
     )
-    inlines = (ArticleItemInline,)
+    list_filter = ('person_types__name',)
 
     def university(self, obj: models.Person):
         return obj.department.faculty.university.name
@@ -95,11 +95,11 @@ class PersonTypeAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('short_title', 'year')
     ordering = ('title', '-year')
-    search_fields = ('title',)
+    search_fields = ('title', 'persons__full_name')
     inlines = (ArticleItemInline,)
 
     def short_title(self, obj: models.Article):
-        return textwrap.shorten(obj.title, width=50, placeholder='...')
+        return textwrap.shorten(obj.title, width=200, placeholder='...')
 
     short_title.short_description = 'title'
 
@@ -117,7 +117,7 @@ class RevisionAdmin(admin.ModelAdmin):
         return super().get_queryset(request) \
             .prefetch_related('scopussnapshot_set') \
             .prefetch_related('googlescholarsnapshot_set') \
-            .prefetch_related('googlescholarsnapshot_set') \
+            .prefetch_related('semanticscholarsnapshot_set') \
             .prefetch_related('wossnapshot_set')
 
     def scopus_snapshots(self, obj: models.Revision):
@@ -148,6 +148,7 @@ class BaseSnapshotAdmin(admin.ModelAdmin):
     list_select_related = ('person', 'revision')
     ordering = ('-revision__created_at',)
     list_display = ('person', 'revision')
+    list_filter = ('revision',)
     search_fields = (
         'person__full_name', '=person__orcid', '=person__scopus_key', '=person__google_scholar_key',
         '=person__semantic_scholar_key', '=person__wos_key'

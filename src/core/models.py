@@ -57,7 +57,7 @@ class Person(models.Model):
 
     full_name = models.CharField(max_length=FULL_NAME_MAX_LENGTH)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
-    articles = models.ManyToManyField('Article', through='ArticleItem')
+    articles = models.ManyToManyField('Article', through='ArticleItem', blank=True)
     person_types = models.ManyToManyField(PersonType, related_name='persons', blank=True)
 
     orcid = models.CharField(
@@ -177,7 +177,7 @@ class Article(models.Model):
 
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     year = models.PositiveSmallIntegerField(null=True, blank=True)
-    persons = models.ManyToManyField(Person, through='ArticleItem')
+    persons = models.ManyToManyField(Person, through='ArticleItem', blank=True)
 
     def __str__(self):
         return textwrap.shorten(self.title, width=50, placeholder='...')

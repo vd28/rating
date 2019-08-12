@@ -13,6 +13,8 @@ DEBUG = False
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'nested_admin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -20,7 +22,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'nested_admin',
     'corsheaders',
     'rest_framework',
     'compressor',

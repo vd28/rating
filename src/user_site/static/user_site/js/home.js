@@ -41,7 +41,8 @@ onPageLoad('home', () => {
       selector,
       {
         chart: {
-          type: 'bar'
+          type: 'bar',
+          height: data.length * 70 || null
         },
 
         credits: {
@@ -77,9 +78,9 @@ onPageLoad('home', () => {
         },
 
         plotOptions: {
-          column: {
-            maxPointWidth: 60,
-            minPointLength: 5
+          bar: {
+            pointPlacement: 1,
+            groupPadding: 0.12
           }
         },
 
