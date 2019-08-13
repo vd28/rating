@@ -104,7 +104,7 @@ onPageLoad('person', () => {
 
   $.ajax({
     method: 'GET',
-    url: `/api/persons/${personId}/snapshots?period=quarter`,
+    url: `/api/persons/${personId}/snapshots/`,
     contentType: 'application/json',
     dataType: 'json',
     cache: false,
