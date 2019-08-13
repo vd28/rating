@@ -27,6 +27,6 @@
 6. Optionally populate database with initial data:
 
     1. jump into container using command `docker-compose exec web bash`;
-    2. run `python loaddata initial`.
+    2. run `python manage.py loaddata initial`.
 
 7. Server will listen on http://0.0.0.0:1337
