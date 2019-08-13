@@ -188,6 +188,14 @@ onPageLoad('person', () => {
     },
     processing: true,
     serverSide: true,
+    createdRow: (row, data, index) => {
+      const plusHtml = `<span style="color: green">+</span>`;
+      const minusHtml = `<span style="color: red">-</span>`;
+      $('td', row).eq(1).html(data.scopus ? plusHtml : minusHtml);
+      $('td', row).eq(2).html(data.google_scholar ? plusHtml : minusHtml);
+      $('td', row).eq(3).html(data.wos ? plusHtml : minusHtml);
+      $('td', row).eq(4).html(data.semantic_scholar ? plusHtml : minusHtml);
+    },
     ajax: (data, callback, settings) => {
 
       const personId = $('meta[name="person_id"]').attr('content');
