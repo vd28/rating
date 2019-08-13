@@ -18,7 +18,7 @@ onPageLoad('person', () => {
       options.forEach((value, idx) => {
 
         series[idx].data.push({
-          name: Highcharts.time.dateFormat('%e of %b', new Date(item.revision.created_at)),
+          name: Highcharts.time.dateFormat('%e %B, %Y %H:%M', new Date(item.revision.created_at)),
           y: item[value.src]
         });
 
@@ -63,6 +63,7 @@ onPageLoad('person', () => {
             text: null
           },
           tickWidth: 0,
+          uniqueNames: false,
           labels: {
             rotation: -45,
             style: {
@@ -205,6 +206,7 @@ onPageLoad('person', () => {
         url: `/api/persons/${personId}/articles/`,
         contentType: 'application/json',
         dataType: 'json',
+        cache: false,
         data: buildPaginationParams(data),
         success: response => {
           const payload = response.payload;

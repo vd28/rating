@@ -60,7 +60,8 @@ onPageLoad('home', () => {
         xAxis: {
           type: 'category',
           title: {
-            text: null
+            text: 'Факультети',
+            align: 'high'
           },
           uniqueNames: false,
           labels: {
