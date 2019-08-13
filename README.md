@@ -23,5 +23,10 @@
     1. jump into container using command `docker-compose exec web bash`;
     2. run `python manage.py createsuperuser`;
     3. follow prompted instructions.
+    
+6. Optionally populate database with initial data:
 
-6. Server will listen on http://0.0.0.0:1337
+    1. jump into container using command `docker-compose exec web bash`;
+    2. run `python loaddata initial`.
+
+7. Server will listen on http://0.0.0.0:1337

@@ -42,7 +42,7 @@ onPageLoad('home', () => {
       {
         chart: {
           type: 'bar',
-          height: data.length * 70 || null
+          height: data.length <= 3 ? null : data.length * 100,
         },
 
         credits: {
@@ -50,7 +50,11 @@ onPageLoad('home', () => {
         },
 
         title: {
-          text: null
+          text: 'Кількість зареєстрованих співробітників'
+        },
+
+        legend: {
+          verticalAlign: 'top'
         },
 
         xAxis: {
@@ -59,7 +63,6 @@ onPageLoad('home', () => {
             text: null
           },
           uniqueNames: false,
-          tickWidth: 0,
           labels: {
             style: {
               fontSize: '12px'
@@ -68,19 +71,13 @@ onPageLoad('home', () => {
         },
 
         yAxis: {
-          title: {
-            text: 'Кількість зареєстрованих співробітників'
-          },
-          gridLineWidth: 0,
-          allowDecimals: false,
-          min: 0,
-          softMax: 2
+          visible: false
         },
 
         plotOptions: {
           bar: {
-            pointPlacement: 1,
-            groupPadding: 0.12
+            groupPadding: 0.12,
+            minPointLength: 3,
           }
         },
 
