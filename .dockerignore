@@ -4,11 +4,11 @@
 *.pyc
 __pycache__
 /src/rating/static
-/infrastructure
+/development
 
 node_modules
+README.md
 Dockerfile
-nginx.conf
 docker-compose.yml
 .gitignore
 .editorconfig
