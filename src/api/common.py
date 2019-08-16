@@ -6,6 +6,16 @@ from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
+from core.models import ScopusSnapshot, GoogleScholarSnapshot, SemanticScholarSnapshot, WosSnapshot
+
+
+SNAPSHOT_MODEL_MAPPING = {
+    'scopus': ScopusSnapshot,
+    'google-scholar': GoogleScholarSnapshot,
+    'semantic-scholar': SemanticScholarSnapshot,
+    'wos': WosSnapshot
+}
+
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 

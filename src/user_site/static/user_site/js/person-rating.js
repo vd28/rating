@@ -45,14 +45,14 @@ onPageLoad('person_rating', () => {
         }),
         success: response => {
           const payload = response.payload;
-          payload.rating.forEach(person => {
+          payload.objects.forEach(person => {
             person.linkEl = `<a href="/persons/${person.id}/">${person.full_name}</a>`
           });
           callback({
             draw: data.draw,
             recordsTotal: payload.total,
             recordsFiltered: payload.total,
-            data: payload.rating
+            data: payload.objects
           });
         },
         error: () => {

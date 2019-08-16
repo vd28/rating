@@ -37,7 +37,7 @@ onPageLoad('faculty_rating', () => {
             draw: data.draw,
             recordsTotal: payload.total,
             recordsFiltered: payload.total,
-            data: payload.rating
+            data: payload.objects
           });
         },
         error: () => {

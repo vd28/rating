@@ -1,18 +1,18 @@
-from typing import Tuple, Iterable, Any, Optional, List
+from typing import Tuple, Iterable, Any, Optional, List, Dict
 from django.db import models
 
 
-class PaginatorError(Exception):
+class PaginationError(Exception):
     pass
 
 
-class FieldDoesNotExist(PaginatorError):
+class FieldDoesNotExist(PaginationError):
     def __init__(self, field: str):
         super().__init__(f'The field {repr(field)} does not exist.')
         self.field = field
 
 
-class PageDoesNotExist(PaginatorError):
+class PageDoesNotExist(PaginationError):
     def __init__(self, page: int):
         super().__init__(f'The page {page} doest not exist.')
         self.page = page
@@ -46,15 +46,23 @@ class Results:
         self.page = page
         self.limit = limit
 
+    def to_dict(self) -> Dict:
+        return {
+            'page': self.page,
+            'limit': self.limit,
+            'total': self.total,
+            'objects': self.objects,
+        }
+
 
 class Paginator:
 
     field_lookups = {}
     search_lookups = ()
+    select_related = ()
     prefetch_related = ()
 
     def __init__(self):
-
         self.ordering = ()
         self.term = None
         self.pagination = None
@@ -75,17 +83,15 @@ class Paginator:
         return self
 
     def build(self):
-        qs = self.get_queryset()
-        qs = self.sort(qs)
-        qs = self.annotate(qs)
-        qs = self.search(qs)
-
+        qs = self.annotate(self.search(self.sort(self.get_queryset())))
         total = qs.count()
-
         qs = self.paginate(qs)
 
-        for lookup in self.prefetch_related:
-            qs = qs.prefetch_related(lookup)
+        if self.select_related:
+            qs = qs.select_related(*self.select_related)
+
+        if self.prefetch_related:
+            qs = qs.prefetch_related(*self.prefetch_related)
 
         objects = tuple(qs)
         pagination = self.pagination or Pagination(page=1, limit=total or 1)

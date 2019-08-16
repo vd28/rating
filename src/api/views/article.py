@@ -4,7 +4,7 @@ from django.db import models
 from rest_framework.request import Request
 
 from core import queries
-from core.pagination import Pagination, Paginator, PageDoesNotExist, FieldDoesNotExist
+from core.paginator import Pagination, Paginator, PageDoesNotExist, FieldDoesNotExist
 from api.common import BaseView, ApiResponse
 from api.decorators import parse_ordering, parse_search_term, parse_pagination
 from api.serializers.article import ArticleSerializer
@@ -51,11 +51,5 @@ class ArticleListView(BaseView):
         except FieldDoesNotExist as e:
             return ApiResponse.unprocessable_entity(error_message=str(e))
 
-        serializer = ArticleSerializer(result.objects, many=True)
-
-        return ApiResponse.ok(payload={
-            'page': result.page,
-            'limit': result.limit,
-            'total': result.total,
-            'articles': serializer.data
-        })
+        result.objects = ArticleSerializer(result.objects, many=True).data
+        return ApiResponse.ok(payload=result.to_dict())

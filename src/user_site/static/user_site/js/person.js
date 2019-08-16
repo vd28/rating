@@ -214,7 +214,7 @@ onPageLoad('person', () => {
             draw: data.draw,
             recordsTotal: payload.total,
             recordsFiltered: payload.total,
-            data: payload.articles
+            data: payload.objects
           });
         },
         error: () => {

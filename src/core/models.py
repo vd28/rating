@@ -1,9 +1,8 @@
 import textwrap
+from typing import Iterable
 
 from django.db import models
 from django.utils import formats
-
-from .rating_builder import Options
 
 
 class University(models.Model):
@@ -91,6 +90,15 @@ class Revision(models.Model):
         return formats.date_format(self.created_at, 'SHORT_DATETIME_FORMAT')
 
 
+class SnapshotOptions:
+    __slots__ = ('name', 'fields', 'ordering')
+
+    def __init__(self, name: str, fields: Iterable[str], ordering: Iterable[str]):
+        self.name = name
+        self.fields = set(fields)
+        self.ordering = tuple(ordering)
+
+
 class AbstractSnapshot(models.Model):
     class Meta:
         abstract = True
@@ -115,7 +123,7 @@ class ScopusSnapshot(AbstractSnapshot):
 
     @staticmethod
     def get_options():
-        return Options(
+        return SnapshotOptions(
             name='scopussnapshot',
             fields={'h_index', 'documents', 'citations'},
             ordering=('-h_index', '-documents', '-citations'),
@@ -132,7 +140,7 @@ class GoogleScholarSnapshot(AbstractSnapshot):
 
     @staticmethod
     def get_options():
-        return Options(
+        return SnapshotOptions(
             name='googlescholarsnapshot',
             fields={'h_index', 'citations'},
             ordering=('-h_index', '-citations'),
@@ -149,7 +157,7 @@ class SemanticScholarSnapshot(AbstractSnapshot):
 
     @staticmethod
     def get_options():
-        return Options(
+        return SnapshotOptions(
             name='semanticscholarsnapshot',
             fields={'citation_velocity', 'influential_citation_count'},
             ordering=('-citation_velocity', '-influential_citation_count'),
@@ -165,7 +173,7 @@ class WosSnapshot(AbstractSnapshot):
 
     @staticmethod
     def get_options():
-        return Options(
+        return SnapshotOptions(
             name='wossnapshot',
             fields={'publications'},
             ordering=('-publications',),

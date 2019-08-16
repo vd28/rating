@@ -1,7 +1,7 @@
 import os
 from django.conf import settings
 from django.test import TestCase
-from ..pagination import Pagination, PageDoesNotExist
+from ..paginator import Pagination, PageDoesNotExist
 from .. import rating_builder, models
 
 

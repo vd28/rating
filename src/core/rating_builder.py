@@ -2,28 +2,19 @@ from typing import Tuple, Optional, Iterable, Dict, List
 
 from django.db import models
 
-from . import models as core_models
-from .pagination import Paginator
-
-
-class Options:
-    __slots__ = ('name', 'fields', 'ordering')
-
-    def __init__(self, name: str, fields: Iterable[str], ordering: Iterable[str]):
-        self.name = name
-        self.fields = set(fields)
-        self.ordering = tuple(ordering)
+from .models import Person, Faculty, Department, SnapshotOptions
+from .paginator import Paginator
 
 
 class AbstractRatingBuilder(Paginator):
-    path_to_snapshot = '{snapshot}__{field}'
+    snapshot_lookup = '{snapshot}__{field}'
 
-    def __init__(self, snapshot_options: Options):
+    def __init__(self, snapshot_options: SnapshotOptions):
         super().__init__()
         self.options = snapshot_options
         self.revision_id = None
         self.set_ordering(self.options.ordering)
-        self.field_lookups = self.build_field_lookups()
+        self.field_lookups = self.get_field_lookups()
 
     def build(self):
         if self.revision_id is None:
@@ -36,37 +27,37 @@ class AbstractRatingBuilder(Paginator):
             self.ordering = self.options.ordering
         return self
 
-    def annotate(self, qs: models.QuerySet) -> models.QuerySet:
-        options = {
-            self.field_lookups[field]: models.F(self.build_snapshot_field_lookup(field))
-            for field in self.options.fields
-        }
-        return qs.annotate(**options)
-
     def set_revision(self, revision_id: int) -> 'AbstractRatingBuilder':
         self.revision_id = revision_id
         return self
 
-    def build_snapshot_field_lookup(self, field: str) -> str:
-        return self.path_to_snapshot.format(snapshot=self.options.name, field=field)
+    def annotate(self, qs: models.QuerySet) -> models.QuerySet:
+        options = {
+            self.field_lookups[field]: models.F(self.get_snapshot_lookup(field))
+            for field in self.options.fields
+        }
+        return qs.annotate(**options)
 
-    def build_field_lookups(self) -> Dict[str, str]:
+    def get_snapshot_lookup(self, field: str) -> str:
+        return self.snapshot_lookup.format(snapshot=self.options.name, field=field)
+
+    def get_field_lookups(self) -> Dict[str, str]:
         return {field: f'{self.options.name}_{field}' for field in self.options.fields}
 
 
 class DepartmentRatingBuilder(AbstractRatingBuilder):
-    path_to_snapshot = 'person__{snapshot}__{field}'
+    snapshot_lookup = 'person__{snapshot}__{field}'
     search_lookups = ('name__icontains',)
 
-    def __init__(self, snapshot_options: Options):
+    def __init__(self, snapshot_options: SnapshotOptions):
         super().__init__(snapshot_options)
         self.university_id = None
         self.faculty_id = None
 
-    def build_field_lookups(self):
-        fields_map = super().build_field_lookups()
-        fields_map.update({'name': 'name'})
-        return fields_map
+    def get_field_lookups(self):
+        field_lookups = super().get_field_lookups()
+        field_lookups.update({'name': 'name'})
+        return field_lookups
 
     def set_university(self, university_id: int) -> 'DepartmentRatingBuilder':
         self.university_id = university_id
@@ -79,8 +70,8 @@ class DepartmentRatingBuilder(AbstractRatingBuilder):
         return self
 
     def get_queryset(self) -> models.QuerySet:
-        qs = core_models.Department.objects \
-            .filter(**{self.build_snapshot_field_lookup('revision_id'): self.revision_id})
+        qs = Department.objects \
+            .filter(**{self.get_snapshot_lookup('revision_id'): self.revision_id})
 
         if self.university_id is not None:
             qs = qs.filter(faculty__university_id=self.university_id)
@@ -100,7 +91,7 @@ class DepartmentRatingBuilder(AbstractRatingBuilder):
         options = {
             self.field_lookups[field]: models.Window(
                 **window,
-                expression=models.Max(self.build_snapshot_field_lookup(field))
+                expression=models.Max(self.get_snapshot_lookup(field))
             )
             for field in self.options.fields
         }
@@ -112,25 +103,26 @@ class DepartmentRatingBuilder(AbstractRatingBuilder):
 
 
 class FacultyRatingBuilder(AbstractRatingBuilder):
-    path_to_snapshot = 'department__person__{snapshot}__{field}'
+    snapshot_lookup = 'department__person__{snapshot}__{field}'
     search_lookups = ('name__icontains',)
 
-    def __init__(self, snapshot_options: Options):
+    def __init__(self, snapshot_options: SnapshotOptions):
         super().__init__(snapshot_options)
         self.university_id = None
 
-    def build_field_lookups(self):
-        fields_map = super().build_field_lookups()
-        fields_map.update({'name': 'name'})
-        return fields_map
+    def get_field_lookups(self):
+        field_lookups = super().get_field_lookups()
+        field_lookups.update({'name': 'name'})
+        return field_lookups
 
     def set_university(self, university_id: int) -> 'FacultyRatingBuilder':
         self.university_id = university_id
         return self
 
     def get_queryset(self) -> models.QuerySet:
-        return core_models.Faculty.objects.filter(university_id=self.university_id) \
-            .filter(**{self.build_snapshot_field_lookup('revision_id'): self.revision_id}) \
+        return Faculty.objects \
+            .filter(university_id=self.university_id) \
+            .filter(**{self.get_snapshot_lookup('revision_id'): self.revision_id}) \
             .distinct()
 
     def build(self):
@@ -143,7 +135,7 @@ class FacultyRatingBuilder(AbstractRatingBuilder):
         options = {
             self.field_lookups[field]: models.Window(
                 **window,
-                expression=models.Max(self.build_snapshot_field_lookup(field))
+                expression=models.Max(self.get_snapshot_lookup(field))
             )
             for field in self.options.fields
         }
@@ -160,20 +152,19 @@ class PersonRatingBuilder(AbstractRatingBuilder):
         'google_scholar_key__exact', 'semantic_scholar_key__exact',
         'wos_key__exact'
     )
-
     prefetch_related = ('person_types',)
 
-    def __init__(self, snapshot_options: Options):
+    def __init__(self, snapshot_options: SnapshotOptions):
         super().__init__(snapshot_options)
         self.university_id = None
         self.faculty_id = None
         self.department_id = None
         self.person_type_ids = []
 
-    def build_field_lookups(self):
-        fields_map = super().build_field_lookups()
-        fields_map.update({'full_name': 'full_name'})
-        return fields_map
+    def get_field_lookups(self):
+        field_lookups = super().get_field_lookups()
+        field_lookups.update({'full_name': 'full_name'})
+        return field_lookups
 
     def set_university(self, university_id: int) -> 'PersonRatingBuilder':
         self.university_id = university_id
@@ -198,8 +189,8 @@ class PersonRatingBuilder(AbstractRatingBuilder):
         return self
 
     def get_queryset(self) -> models.QuerySet:
-        qs = core_models.Person.objects \
-            .filter(**{self.build_snapshot_field_lookup('revision_id'): self.revision_id})
+        qs = Person.objects \
+            .filter(**{self.get_snapshot_lookup('revision_id'): self.revision_id})
 
         if self.university_id is not None:
             qs = qs.filter(department__faculty__university_id=self.university_id)

@@ -3,8 +3,7 @@ from django.utils import timezone
 
 from rest_framework.request import Request
 
-from core.models import ScopusSnapshot, GoogleScholarSnapshot, SemanticScholarSnapshot, WosSnapshot
-from api.common import BaseView, ApiResponse
+from api.common import BaseView, ApiResponse, SNAPSHOT_MODEL_MAPPING
 from api.serializers.snapshot import BaseSnapshotSerializer
 
 
@@ -32,13 +31,6 @@ def _week(qs: QuerySet) -> QuerySet:
 
 
 class SnapshotListView(BaseView):
-    snapshot_model_mapping = {
-        'scopus': ScopusSnapshot,
-        'google-scholar': GoogleScholarSnapshot,
-        'semantic-scholar': SemanticScholarSnapshot,
-        'wos': WosSnapshot
-    }
-
     period = {
         '': _noop,
         'year': _year,
@@ -52,13 +44,13 @@ class SnapshotListView(BaseView):
         filter_period = self.period.get(request.query_params.get('period', ''))
 
         snapshots = set(s.strip() for s in request.query_params.get('snapshots', '').split(','))
-        snapshots.intersection_update(self.snapshot_model_mapping.keys())
+        snapshots.intersection_update(SNAPSHOT_MODEL_MAPPING.keys())
         if not snapshots:
-            snapshots = self.snapshot_model_mapping.keys()
+            snapshots = SNAPSHOT_MODEL_MAPPING.keys()
 
         data = {}
         for snapshot in snapshots:
-            model = self.snapshot_model_mapping[snapshot]
+            model = SNAPSHOT_MODEL_MAPPING[snapshot]
             qs = filter_period(model.objects.filter(person_id=person_id)) \
                 .select_related('revision') \
                 .order_by('revision__created_at')

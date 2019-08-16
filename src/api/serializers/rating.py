@@ -1,6 +1,9 @@
 from typing import Type
+
 from rest_framework import serializers
+
 from core import models
+from api.common import SNAPSHOT_MODEL_MAPPING
 
 
 class BaseRatingSerializer(serializers.Serializer):
@@ -38,14 +41,8 @@ class PersonRatingSerializer(BaseRatingSerializer):
 
 
 class BaseRatingOptionsSerializer(serializers.Serializer):
-    SCOPUS = 'scopus'
-    GOOGLE_SCHOLAR = 'google-scholar'
-    SEMANTIC_SCHOLAR = 'semantic-scholar'
-    WOS = 'wos'
-    SNAPSHOTS = (SCOPUS, GOOGLE_SCHOLAR, SEMANTIC_SCHOLAR, WOS)
-
     revision_id = serializers.IntegerField(required=False)
-    snapshot = serializers.ChoiceField(choices=SNAPSHOTS)
+    snapshot = serializers.ChoiceField(choices=tuple(SNAPSHOT_MODEL_MAPPING.keys()))
 
 
 class PersonRatingOptionsSerializer(BaseRatingOptionsSerializer):

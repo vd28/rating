@@ -5,12 +5,12 @@ from django.conf import settings
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from core import models, queries
-from core.pagination import Pagination, PageDoesNotExist, FieldDoesNotExist
+from core import queries
+from core.paginator import Pagination, PageDoesNotExist, FieldDoesNotExist, Results
 from core.rating_builder import (
     AbstractRatingBuilder, PersonRatingBuilder, DepartmentRatingBuilder, FacultyRatingBuilder
 )
-from api.common import BaseView, ApiResponse
+from api.common import BaseView, ApiResponse, SNAPSHOT_MODEL_MAPPING
 from api.decorators import parse_ordering, parse_pagination, parse_search_term
 from api.serializers.rating import (
     PersonRatingSerializer, DepartmentRatingSerializer, FacultyRatingSerializer, BaseRatingOptionsSerializer,
@@ -23,13 +23,6 @@ class BaseRatingView(BaseView):
     builder = None
     rating_serializer = None
     options_serializer = BaseRatingOptionsSerializer
-
-    snapshot_model_mapping = {
-        BaseRatingOptionsSerializer.SCOPUS: models.ScopusSnapshot,
-        BaseRatingOptionsSerializer.GOOGLE_SCHOLAR: models.GoogleScholarSnapshot,
-        BaseRatingOptionsSerializer.SEMANTIC_SCHOLAR: models.SemanticScholarSnapshot,
-        BaseRatingOptionsSerializer.WOS: models.WosSnapshot
-    }
 
     @parse_search_term
     @parse_ordering
@@ -47,16 +40,13 @@ class BaseRatingView(BaseView):
         if revision_id is None:
             revision = queries.fetch_latest_revision()
             if revision is None:
-                return ApiResponse.ok(payload={
-                    'page': page,
-                    'limit': limit,
-                    'total': 0,
-                    'rating': []
-                })
+                return ApiResponse.ok(
+                    payload=Results(objects=(), page=page, limit=limit, total=0).to_dict()
+                )
             revision_id = revision.id
 
         snapshot = options_serializer.validated_data.get('snapshot')
-        snapshot_model = self.snapshot_model_mapping[snapshot]
+        snapshot_model = SNAPSHOT_MODEL_MAPPING[snapshot]
         term = kwargs.pop('search_term', None)
         ordering = kwargs.pop('ordering', None)
 
@@ -79,13 +69,9 @@ class BaseRatingView(BaseView):
             return result
 
         rating_serializer = self.get_rating_serializer().adjust(snapshot_model)(result.objects, many=True)
+        result.objects = rating_serializer.data
 
-        return ApiResponse.ok(payload={
-            'page': result.page,
-            'limit': result.limit,
-            'total': result.total,
-            'rating': rating_serializer.data
-        })
+        return ApiResponse.ok(payload=result.to_dict())
 
     def build_rating(self, request: Request, builder: AbstractRatingBuilder, options: Dict[str, Any]):
         raise NotImplementedError
