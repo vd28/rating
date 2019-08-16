@@ -1,10 +1,17 @@
 import textwrap
+import json
 
+from django import forms
+from django.shortcuts import render, redirect
 from django.contrib import admin
+from django.utils.translation import ugettext as _
+from django.http import HttpResponse
 
 from nested_admin.nested import NestedTabularInline, NestedModelAdmin
+from admin_actions.admin import ActionsModelAdmin
 
 from . import models
+from .validators import FileValidator
 
 
 class ArticleItemInline(admin.TabularInline):
@@ -36,18 +43,50 @@ class UniversityAdmin(NestedModelAdmin):
 
 @admin.register(models.Faculty)
 class FacultyAdmin(admin.ModelAdmin):
-    search_fields = ('name',)
+    list_display = ('name', 'university')
+    list_select_related = ('university',)
+    search_fields = ('name', 'university__name')
+    ordering = ('university__name', 'name',)
+    sortable_by = ('name',)
+    inlines = (DepartmentInline,)
 
-    def has_module_permission(self, request):
-        return False
+    def university(self, obj):
+        return obj.university.name
 
 
 @admin.register(models.Department)
 class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'faculty', 'university')
     search_fields = ('name', 'faculty__name', 'faculty__university__name')
+    list_select_related = ('faculty__university',)
+    ordering = ('faculty__university__name', 'faculty__name', 'name')
+    sortable_by = ('name',)
 
-    def has_module_permission(self, request):
-        return False
+    def university(self, obj):
+        return obj.faculty.university.name
+
+    def faculty(self, obj):
+        return obj.faculty.name
+
+
+class PersonKeysFilter(admin.SimpleListFilter):
+    title = _('key')
+    parameter_name = 'key'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('orcid', 'ORCID'),
+            ('scopus_key', 'Scopus'),
+            ('google_scholar_key', 'Google Scholar'),
+            ('semantic_scholar_key', 'Semantic Scholar'),
+            ('wos_key', 'Web of Science')
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value not in set(lookup[0] for lookup in self.lookup_choices):
+            return queryset
+        return queryset.filter(**{f'{value}__isnull': False})
 
 
 @admin.register(models.Person)
@@ -71,7 +110,8 @@ class PersonAdmin(admin.ModelAdmin):
             'fields': ('orcid', 'scopus_key', 'google_scholar_key', 'semantic_scholar_key', 'wos_key')
         })
     )
-    list_filter = ('person_types__name',)
+    list_filter = ('person_types__name', PersonKeysFilter)
+    actions = ('export_keys',)
 
     def university(self, obj: models.Person):
         return obj.department.faculty.university.name
@@ -81,6 +121,26 @@ class PersonAdmin(admin.ModelAdmin):
 
     def department(self, obj: models.Person):
         return obj.department.name
+
+    def export_keys(self, request, queryset):
+
+        data = {}
+        for person in queryset:
+            if person.scopus_key:
+                data.setdefault('scopus', []).append(person.scopus_key)
+
+            if person.google_scholar_key:
+                data.setdefault('google_scholar', []).append(person.google_scholar_key)
+
+            if person.semantic_scholar_key:
+                data.setdefault('semantic_scholar', []).append(person.semantic_scholar_key)
+
+            if person.wos_key:
+                data.setdefault('wos', []).append(person.wos_key)
+
+        response = HttpResponse(json.dumps(data, indent=4, separators=(',', ': ')), content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename=keys.json'
+        return response
 
 
 @admin.register(models.PersonType)
@@ -104,14 +164,21 @@ class ArticleAdmin(admin.ModelAdmin):
     short_title.short_description = 'title'
 
 
+class RevisionImportForm(forms.Form):
+    file = forms.FileField(validators=[
+        FileValidator(max_size=1024 * 600, content_types=('application/json', 'text/plain'))
+    ])
+
+
 @admin.register(models.Revision)
-class RevisionAdmin(admin.ModelAdmin):
+class RevisionAdmin(ActionsModelAdmin):
     ordering = ('-created_at',)
     date_hierarchy = 'created_at'
     list_display_links = None
     list_display = (
         'created_at', 'scopus_snapshots', 'google_scholar_snapshots', 'semantic_scholar_snapshots', 'wos_snapshots'
     )
+    actions_list = ('import_revision',)
 
     def get_queryset(self, request):
         return super().get_queryset(request) \
@@ -142,6 +209,28 @@ class RevisionAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return False
+
+    def import_revision(self, request):
+        context = self.admin_site.each_context(request)
+        context['opts'] = self.opts
+        context['has_view_permission'] = self.has_view_permission(request)
+        context['title'] = _('Import revision')
+
+        if request.method != 'POST':
+            context['form'] = RevisionImportForm()
+
+        else:
+            form = RevisionImportForm(request.POST, request.FILES)
+            if not form.is_valid():
+                context['form'] = form
+
+            else:
+                return redirect('admin:core_revision_changelist')
+
+        return render(request, 'core/admin/revision_import.html', context)
+
+    import_revision.short_description = _('Import revision')
+    import_revision.url_path = 'import'
 
 
 class BaseSnapshotAdmin(admin.ModelAdmin):

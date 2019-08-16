@@ -18,6 +18,8 @@ django-compressor = "*"
 django-compressor-autoprefixer = "*"
 django-debug-toolbar = "*"
 gunicorn = "*"
+django-admin-actions = "*"
+python-magic = "*"
 
 [requires]
 python_version = "3.6"

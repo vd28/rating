@@ -14,6 +14,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'nested_admin',
+    'admin_actions',
 
     'django.contrib.admin',
     'django.contrib.auth',
