@@ -1,4 +1,5 @@
 import os
+from decouple import config
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -84,13 +85,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
 USE_TZ = True
+
+TIME_ZONE = config('TIME_ZONE', default='UTC')
 
 STATIC_URL = '/static/'
 
