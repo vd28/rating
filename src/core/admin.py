@@ -1,17 +1,21 @@
 import textwrap
 import json
 
+from django.db import transaction
 from django import forms
 from django.shortcuts import render, redirect
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.utils.translation import ugettext as _
 from django.http import HttpResponse
 
+from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
 from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 from admin_actions.admin import ActionsModelAdmin
 
 from . import models
 from .validators import FileValidator
+from .loaders import LoaderError
+from .loaders.revision import RevisionLoader
 
 
 class ArticleItemInline(admin.TabularInline):
@@ -49,6 +53,9 @@ class FacultyAdmin(admin.ModelAdmin):
     ordering = ('university__name', 'name',)
     sortable_by = ('name',)
     inlines = (DepartmentInline,)
+    list_filter = (
+        ('university', RelatedDropdownFilter),
+    )
 
     def university(self, obj):
         return obj.university.name
@@ -61,6 +68,10 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_select_related = ('faculty__university',)
     ordering = ('faculty__university__name', 'faculty__name', 'name')
     sortable_by = ('name',)
+    list_filter = (
+        ('faculty__university', RelatedDropdownFilter),
+        ('faculty', RelatedDropdownFilter)
+    )
 
     def university(self, obj):
         return obj.faculty.university.name
@@ -147,7 +158,6 @@ class PersonAdmin(admin.ModelAdmin):
 class PersonTypeAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
-    fields = ('name',)
     ordering = ('name',)
 
 
@@ -176,7 +186,8 @@ class RevisionAdmin(ActionsModelAdmin):
     date_hierarchy = 'created_at'
     list_display_links = None
     list_display = (
-        'created_at', 'scopus_snapshots', 'google_scholar_snapshots', 'semantic_scholar_snapshots', 'wos_snapshots'
+        'created_at', 'source', 'scopus_snapshots', 'google_scholar_snapshots', 'semantic_scholar_snapshots',
+        'wos_snapshots'
     )
     actions_list = ('import_revision',)
 
@@ -210,6 +221,7 @@ class RevisionAdmin(ActionsModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
+    @transaction.atomic
     def import_revision(self, request):
         context = self.admin_site.each_context(request)
         context['opts'] = self.opts
@@ -218,16 +230,31 @@ class RevisionAdmin(ActionsModelAdmin):
 
         if request.method != 'POST':
             context['form'] = RevisionImportForm()
+            return render(request, 'core/admin/revision_import.html', context)
+
+        form = RevisionImportForm(request.POST, request.FILES)
+        if not form.is_valid():
+            context['form'] = form
+            return render(request, 'core/admin/revision_import.html', context)
+
+        try:
+            loader = RevisionLoader(
+                json.load(form.cleaned_data['file']),
+                revision_source=models.Revision.SOURCE_IMPORT,
+                chuck_size=200
+            )
+            loader.load()
+
+        except json.JSONDecodeError:
+            self.message_user(request, _('The file must be a valid JSON file.'), level=messages.ERROR)
+
+        except LoaderError:
+            self.message_user(request, _('Failed to import revision.'), level=messages.ERROR)
 
         else:
-            form = RevisionImportForm(request.POST, request.FILES)
-            if not form.is_valid():
-                context['form'] = form
+            self.message_user(request, _('Revision has been imported successfully.'), level=messages.SUCCESS)
 
-            else:
-                return redirect('admin:core_revision_changelist')
-
-        return render(request, 'core/admin/revision_import.html', context)
+        return redirect('admin:core_revision_changelist')
 
     import_revision.short_description = _('Import revision')
     import_revision.url_path = 'import'
@@ -237,7 +264,9 @@ class BaseSnapshotAdmin(admin.ModelAdmin):
     list_select_related = ('person', 'revision')
     ordering = ('-revision__created_at',)
     list_display = ('person', 'revision')
-    list_filter = ('revision',)
+    list_filter = (
+        ('revision', RelatedDropdownFilter),
+    )
     search_fields = (
         'person__full_name', '=person__orcid', '=person__scopus_key', '=person__google_scholar_key',
         '=person__semantic_scholar_key', '=person__wos_key'

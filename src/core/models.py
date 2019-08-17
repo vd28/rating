@@ -3,6 +3,7 @@ from typing import Iterable
 
 from django.db import models
 from django.utils import formats
+from django.utils.translation import gettext_lazy as _
 
 
 class University(models.Model):
@@ -84,10 +85,18 @@ class Person(models.Model):
 
 
 class Revision(models.Model):
+    SOURCE_IMPORT = 'import'
+    SOURCE_CHOICES = (
+        (SOURCE_IMPORT, _('Import')),
+    )
     created_at = models.DateTimeField(auto_now_add=True)
+    source = models.CharField(choices=SOURCE_CHOICES, blank=True, max_length=30)
 
     def __str__(self):
-        return formats.date_format(self.created_at, 'SHORT_DATETIME_FORMAT')
+        rep = formats.date_format(self.created_at, "SHORT_DATETIME_FORMAT")
+        if self.source:
+            rep += f' ({self.source})'
+        return rep
 
 
 class SnapshotOptions:

@@ -20,6 +20,10 @@ django-debug-toolbar = "*"
 gunicorn = "*"
 django-admin-actions = "*"
 python-magic = "*"
+jsonschema = "*"
+python-dateutil = "*"
+pytz = "*"
+django-admin-list-filter-dropdown = "*"
 
 [requires]
 python_version = "3.6"
