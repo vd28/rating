@@ -14,6 +14,8 @@ DEBUG = False
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'admin_site',
+
     'nested_admin',
     'admin_actions',
     'django_admin_listfilter_dropdown',
@@ -145,3 +147,24 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_COLLAPSED': True,
     'SQL_WARNING_THRESHOLD': 100
 }
+
+ADMIN_APP_LIST = (
+    'auth',
+    {
+        'app': 'core',
+        'models': (
+            'University',
+            'Faculty',
+            'Department',
+            'Person',
+            'PersonType',
+            'Article',
+            'Revision',
+            'ScopusSnapshot',
+            'GoogleScholarSnapshot',
+            'SemanticScholarSnapshot',
+            'WosSnapshot'
+        )
+    },
+    'user_site'
+)

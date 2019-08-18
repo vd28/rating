@@ -140,7 +140,7 @@ class RevisionLoader(Loader):
             self._data = data
 
         except jsonschema.ValidationError as e:
-            raise LoaderError('Schema validation failed', reason='invalid_schema') from e
+            raise LoaderError from e
 
     def load(self):
         revision = Revision.objects.create(source=self.revision_source)

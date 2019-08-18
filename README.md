@@ -14,7 +14,9 @@
     ```
     SECRET_KEY=<long and hard to guess string>
     DATABASE_URI=postgres://<user name>:<database password>@db:5432/<database name>
+    TIME_ZONE=UTC
     ```
+   Replace **UTC** with your time zone.
 
 4. Run `docker-compose up -d --build` in project root.
 
