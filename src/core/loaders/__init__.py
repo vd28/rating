@@ -1,8 +1,4 @@
-class LoaderError(Exception):
-    pass
+from .base import LoaderError
+from .revision import RevisionLoader
 
-
-class Loader:
-
-    def load(self):
-        raise NotImplementedError
+__all__ = ['LoaderError', 'RevisionLoader']

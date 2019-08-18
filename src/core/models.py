@@ -85,18 +85,21 @@ class Person(models.Model):
 
 
 class Revision(models.Model):
+    class Meta:
+        permissions = (
+            ('can_import_revision', _('Can import revision')),
+        )
+
     SOURCE_IMPORT = 'import'
     SOURCE_CHOICES = (
         (SOURCE_IMPORT, _('Import')),
     )
+
     created_at = models.DateTimeField(auto_now_add=True)
     source = models.CharField(choices=SOURCE_CHOICES, blank=True, max_length=30)
 
     def __str__(self):
-        rep = formats.date_format(self.created_at, "SHORT_DATETIME_FORMAT")
-        if self.source:
-            rep += f' ({self.source})'
-        return rep
+        return formats.date_format(self.created_at, "SHORT_DATETIME_FORMAT")
 
 
 class SnapshotOptions:

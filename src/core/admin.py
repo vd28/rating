@@ -5,7 +5,7 @@ from django.db import transaction
 from django import forms
 from django.shortcuts import render, redirect
 from django.contrib import admin, messages
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, gettext_lazy
 from django.http import HttpResponse
 
 from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
@@ -14,8 +14,7 @@ from admin_actions.admin import ActionsModelAdmin
 
 from . import models
 from .validators import FileValidator
-from .loaders import LoaderError
-from .loaders.revision import RevisionLoader
+from .loaders import LoaderError, RevisionLoader
 
 
 class ArticleItemInline(admin.TabularInline):
@@ -34,7 +33,7 @@ class FacultyInline(NestedTabularInline):
     model = models.Faculty
     ordering = ('name',)
     inlines = (DepartmentInline,)
-    extra = 1
+    extra = 0
 
 
 @admin.register(models.University)
@@ -53,9 +52,7 @@ class FacultyAdmin(admin.ModelAdmin):
     ordering = ('university__name', 'name',)
     sortable_by = ('name',)
     inlines = (DepartmentInline,)
-    list_filter = (
-        ('university', RelatedDropdownFilter),
-    )
+    autocomplete_fields = ('university',)
 
     def university(self, obj):
         return obj.university.name
@@ -68,10 +65,7 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_select_related = ('faculty__university',)
     ordering = ('faculty__university__name', 'faculty__name', 'name')
     sortable_by = ('name',)
-    list_filter = (
-        ('faculty__university', RelatedDropdownFilter),
-        ('faculty', RelatedDropdownFilter)
-    )
+    autocomplete_fields = ('faculty',)
 
     def university(self, obj):
         return obj.faculty.university.name
@@ -81,7 +75,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 
 class PersonKeysFilter(admin.SimpleListFilter):
-    title = _('key')
+    title = gettext_lazy('key')
     parameter_name = 'key'
 
     def lookups(self, request, model_admin):
@@ -121,7 +115,7 @@ class PersonAdmin(admin.ModelAdmin):
             'fields': ('orcid', 'scopus_key', 'google_scholar_key', 'semantic_scholar_key', 'wos_key')
         })
     )
-    list_filter = ('person_types__name', PersonKeysFilter)
+    list_filter = ('person_types', PersonKeysFilter)
     actions = ('export_keys',)
 
     def university(self, obj: models.Person):
@@ -223,6 +217,10 @@ class RevisionAdmin(ActionsModelAdmin):
 
     @transaction.atomic
     def import_revision(self, request):
+        if not request.user.has_perm('core.can_import_revision'):
+            self.message_user(request, _('You do not have permissions to view this page.'), level=messages.WARNING)
+            return redirect('admin:core_revision_changelist')
+
         context = self.admin_site.each_context(request)
         context['opts'] = self.opts
         context['has_view_permission'] = self.has_view_permission(request)
@@ -256,7 +254,7 @@ class RevisionAdmin(ActionsModelAdmin):
 
         return redirect('admin:core_revision_changelist')
 
-    import_revision.short_description = _('Import revision')
+    import_revision.short_description = gettext_lazy('Import revision')
     import_revision.url_path = 'import'
 
 

@@ -4,7 +4,7 @@ import dateutil.parser
 import pytz
 import jsonschema
 
-from . import Loader, LoaderError
+from .base import Loader, LoaderError
 from core.models import Revision, ScopusSnapshot, GoogleScholarSnapshot, SemanticScholarSnapshot, WosSnapshot, Person
 
 
@@ -140,7 +140,7 @@ class RevisionLoader(Loader):
             self._data = data
 
         except jsonschema.ValidationError as e:
-            raise LoaderError from e
+            raise LoaderError('Schema validation failed', reason='invalid_schema') from e
 
     def load(self):
         revision = Revision.objects.create(source=self.revision_source)

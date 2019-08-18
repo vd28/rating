@@ -9,7 +9,7 @@ import magic
 
 
 @deconstructible
-class FileValidator(object):
+class FileValidator:
     error_messages = {
         'max_size': _("Ensure this file size is not greater than %(max_size)s. Your file size is %(size)s."),
         'min_size': _("Ensure this file size is not less than %(min_size)s. Your file size is %(size)s."),
