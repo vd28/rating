@@ -1,7 +1,8 @@
 onPageLoad('person', () => {
 
-  function buildHistoryChart(selector, data, options) {
+  function buildHistoryChart(selector, data, options, timezone) {
 
+    timezone = timezone || 'UTC';
     const series = [];
 
     options.forEach((value, idx, collection) => {
@@ -16,9 +17,14 @@ onPageLoad('person', () => {
 
     data.forEach(item => {
       options.forEach((value, idx) => {
+        const name = luxon.DateTime
+          .fromISO(item.revision.created_at)
+          .setLocale('uk')
+          .setZone(timezone)
+          .toFormat('d MMMM, yyyy HH:mm');
 
         series[idx].data.push({
-          name: Highcharts.time.dateFormat('%e %B, %Y %H:%M', new Date(item.revision.created_at)),
+          name,
           y: item[value.src]
         });
 
@@ -101,7 +107,8 @@ onPageLoad('person', () => {
     )
   }
 
-  const personId = $('meta[name="person_id"]').attr('content');
+  const personId = $('meta[data-name="person_id"]').attr('data-content');
+  const tz = $('meta[data-name="timezone"]').attr('data-content');
 
   $.ajax({
     method: 'GET',
@@ -124,7 +131,8 @@ onPageLoad('person', () => {
           },
           {src: 'citations', name: 'Citations', type: 'column', yAxis: 0},
           {src: 'documents', name: 'Documents', type: 'column', yAxis: 0},
-        ]
+        ],
+        tz
       );
 
       buildHistoryChart(
@@ -137,7 +145,8 @@ onPageLoad('person', () => {
             yAxis: 1
           },
           {src: 'citations', name: 'Citations', type: 'column', yAxis: 0}
-        ]
+        ],
+        tz
       );
 
       buildHistoryChart(
@@ -152,7 +161,8 @@ onPageLoad('person', () => {
         [
           {src: 'citation_velocity', name: 'Citation Velocity', type: 'column', yAxis: 0},
           {src: 'influential_citation_count', name: 'Influential Citation Count', type: 'column', yAxis: 0}
-        ]
+        ],
+        tz
       );
 
     }
@@ -199,7 +209,7 @@ onPageLoad('person', () => {
     },
     ajax: (data, callback, settings) => {
 
-      const personId = $('meta[name="person_id"]').attr('content');
+      const personId = $('meta[data-name="person_id"]').attr('data-content');
 
       $.ajax({
         method: 'GET',

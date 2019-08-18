@@ -18,8 +18,8 @@ onPageLoad('faculty_rating', () => {
 
       const params = $.param(buildPaginationParams(data));
       const url = params ? '/api/rating/faculties/?' + params : '/api/rating/faculties/';
-      const revisionId = $('meta[name="revision_id"]').attr('content');
-      const universityId = $('meta[name="university_id"]').attr('content');
+      const revisionId = $('meta[data-name="revision_id"]').attr('data-content');
+      const universityId = $('meta[data-name="university_id"]').attr('data-content');
 
       $.ajax({
         method: 'POST',

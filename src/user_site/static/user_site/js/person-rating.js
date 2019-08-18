@@ -2,7 +2,7 @@ onPageLoad('person_rating', () => {
 
   $('#peron-types-select').selectmenu({
     change: (event, ui) => {
-      $('meta[name="person_type_id"]').attr('content', ui.item.value);
+      $('meta[data-name="person_type_id"]').attr('data-content', ui.item.value);
       $('#scopus').DataTable().rows().invalidate('data').draw(false);
       $('#google-scholar').DataTable().rows().invalidate('data').draw(false);
       $('#semantic-scholar').DataTable().rows().invalidate('data').draw(false);
@@ -28,9 +28,9 @@ onPageLoad('person_rating', () => {
 
       const params = $.param(buildPaginationParams(data));
       const url = params ? '/api/rating/persons/?' + params : '/api/rating/persons/';
-      const revisionId = $('meta[name="revision_id"]').attr('content');
-      const universityId = $('meta[name="university_id"]').attr('content');
-      const personTypeId = $('meta[name="person_type_id"]').attr('content');
+      const revisionId = $('meta[data-name="revision_id"]').attr('data-content');
+      const universityId = $('meta[data-name="university_id"]').attr('data-content');
+      const personTypeId = $('meta[data-name="person_type_id"]').attr('data-content');
 
       $.ajax({
         method: 'POST',

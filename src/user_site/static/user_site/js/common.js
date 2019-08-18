@@ -27,7 +27,7 @@ function buildPaginationParams(data) {
 }
 
 function onPageLoad(endpoint, callback) {
-  const metaEndpoint = $('meta[name="endpoint"]').attr('content');
+  const metaEndpoint = $('meta[data-name="endpoint"]').attr('data-content');
   if (metaEndpoint === endpoint) {
     console.debug('Execute callback for ' + endpoint);
     callback();

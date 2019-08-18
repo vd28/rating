@@ -109,7 +109,7 @@ onPageLoad('home', () => {
 
   }
 
-  const universityId = $('meta[name="university_id"]').attr('content');
+  const universityId = $('meta[data-name="university_id"]').attr('data-content');
 
   $.ajax({
     method: 'GET',
