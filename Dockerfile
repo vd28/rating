@@ -15,8 +15,8 @@ RUN pipenv install --deploy --system
 ENV DJANGO_SETTINGS_MODULE "rating.settings.prod"
 
 COPY ./entrypoint.sh ./
-COPY ./src ./src/
 RUN chmod +x entrypoint.sh
+COPY ./src ./src/
 
 WORKDIR /app/src/
 
