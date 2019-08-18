@@ -133,7 +133,7 @@ class Paginator:
         if len(self.search_lookups) == 0 or self.term is None:
             return qs
 
-        cond = models.Q(**{**{self.search_lookups[0]: self.term}})
+        cond = models.Q(**{self.search_lookups[0]: self.term})
         for lookup in self.search_lookups[1:]:
             cond |= models.Q(**{lookup: self.term})
 
