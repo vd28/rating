@@ -6,18 +6,15 @@ register = template.Library()
 
 @register.filter
 def reorder_app_list(app_list):
+    if len(app_list) == 0:
+        return app_list
+
     conf = getattr(settings, 'ADMIN_APP_LIST', None)
 
     if conf is None:
         return app_list
 
-    app_mapping = {}
-    for app in app_list:
-        app_mapping[app['app_label']] = (
-            app,
-            {model['object_name'].lower(): model for model in app['models']}
-        )
-
+    app_mapping = {app['app_label']: app for app in app_list}
     new_app_list = []
 
     for app_conf in conf:
@@ -29,21 +26,22 @@ def reorder_app_list(app_list):
             app_label = app_conf['app']
             models_conf = app_conf['models']
 
-        if app_label not in app_mapping:
-            continue
+        app = app_mapping.get(app_label)
 
-        app, model_mapping = app_mapping[app_label]
+        if app is None:
+            continue
 
         if models_conf is None:
             new_app_list.append(app)
 
-        else:
+        elif len(models_conf) > 0:
+            model_mapping = {model['object_name'].lower(): model for model in app['models']}
             new_model_list = []
 
             for model_name in models_conf:
-                model_name = model_name.lower()
-                if model_name in model_mapping:
-                    new_model_list.append(model_mapping[model_name])
+                model = model_mapping.get(model_name.lower())
+                if model is not None:
+                    new_model_list.append(model)
 
             app['models'] = new_model_list
             new_app_list.append(app)
