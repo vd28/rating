@@ -172,7 +172,10 @@ class RevisionLoader(Loader):
                 if person is None:
                     continue
 
-                chunk.append(model(person=person, revision=revision, **snapshot))
+                model_instance = self._create_model_from_snapshot(model, snapshot)
+                model_instance.person = person
+                model_instance.revision = revision
+                chunk.append(model_instance)
 
                 if len(chunk) == self.chunk_size:
                     model.objects.bulk_create(chunk)
@@ -182,3 +185,9 @@ class RevisionLoader(Loader):
                 model.objects.bulk_create(chunk)
 
         return revision
+
+    def _create_model_from_snapshot(self, model, snapshot):
+        model_instance = model()
+        for field in model.get_options().fields:
+            setattr(model_instance, field, snapshot.get(field, 0))
+        return model_instance
