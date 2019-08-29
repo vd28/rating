@@ -4,12 +4,9 @@
 *.pyc
 __pycache__
 /src/rating/static
-/development
 
 node_modules
 README.md
-Dockerfile
-docker-compose.yml
 .gitignore
 .editorconfig
 .dockerignore

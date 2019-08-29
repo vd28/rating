@@ -2,7 +2,9 @@ version: "3.7"
 
 services:
   web:
-    build: .
+    build:
+      context: ../../
+      dockerfile: ./docker/prod/Dockerfile
     command: gunicorn rating.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/app/src/rating/static
@@ -17,7 +19,7 @@ services:
     image: postgres:10.7
     restart: always
     volumes:
-      - prod_postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
     env_file: .env.db
 
   nginx:
@@ -31,5 +33,5 @@ services:
       - web
 
 volumes:
-  prod_postgres_data:
+  postgres_data:
   static_volume:
