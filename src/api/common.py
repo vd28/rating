@@ -41,7 +41,7 @@ class ApiResponse(Response):
                 'successful': error_message is None and validation_errors is None and error_code is None,
                 'error_code': error_code,
                 'error_message': error_message,
-                'validation_errors': validation_errors or [],
+                'validation_errors': validation_errors,
                 'node': platform.node()
             }
         }

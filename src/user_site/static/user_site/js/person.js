@@ -1,5 +1,19 @@
 onPageLoad('person', () => {
 
+  function drawGraph(target, data) {
+    const graph = new Dracula.Graph();
+
+    graph.addNode(data.self.id, {label: data.self.full_name});
+
+    data.joint_authors.forEach(person => {
+      graph.addNode(person.id, {label: `${person.full_name} (${person.articles_count})`});
+      graph.addEdge(person.id, data.self.id);
+    });
+
+    new Dracula.Layout.Spring(graph).layout();
+    new Dracula.Renderer.Raphael(target, graph, $(target).width(), 600).draw();
+  }
+
   function buildHistoryChart(selector, data, options, timezone) {
 
     timezone = timezone || 'UTC';
@@ -109,6 +123,17 @@ onPageLoad('person', () => {
 
   const personId = $('meta[data-name="person_id"]').attr('data-content');
   const tz = $('meta[data-name="timezone"]').attr('data-content');
+
+  $.ajax({
+    method: 'GET',
+    url: `/api/persons/${personId}/joint-authors/`,
+    contentType: 'application/json',
+    dataType: 'json',
+    cache: false,
+    success: response => {
+      drawGraph('#graph', response.payload);
+    }
+  });
 
   $.ajax({
     method: 'GET',
@@ -238,5 +263,4 @@ onPageLoad('person', () => {
       });
     }
   });
-
 });

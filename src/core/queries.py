@@ -53,5 +53,14 @@ def fetch_person(person_id: int, load_university: bool = False) -> Person:
     return qs.get(id=person_id)
 
 
+def fetch_joints_authors(person_id: int) -> models.QuerySet:
+    subquery = ArticleItem.objects.filter(person_id=person_id).values('article_id')
+    return Person.objects \
+        .filter(articleitem__article_id__in=models.Subquery(subquery)) \
+        .annotate(articles_count=models.Count('id')) \
+        .exclude(id=person_id) \
+        .order_by('full_name')
+
+
 def fetch_articles(person_id: int) -> models.QuerySet:
     return ArticleItem.objects.select_related('person', 'article').filter(person_id=person_id)

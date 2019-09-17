@@ -4,151 +4,158 @@
 
 {% block meta_tags %}
     {{ block.super }}
-    <meta data-name="person_id" data-content="{{ person.id }}">
+  <meta data-name="person_id" data-content="{{ person.id }}">
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h3>{{ person.full_name }}</h3>
+  <div class="card">
+    <h3>{{ person.full_name }}</h3>
+
+    <table class="s-table">
+      <tbody>
+      <tr>
+        <td>Університет:</td>
+        <td>{{ person.department.faculty.university.name }}</td>
+      </tr>
+
+      <tr>
+        <td>Факультет:</td>
+        <td>{{ person.department.faculty.name }}</td>
+      </tr>
+
+      <tr>
+        <td>Кафедра:</td>
+        <td>{{ person.department.name }}</td>
+      </tr>
+
+      {% if person.orcid %}
+        <tr>
+          <td>ORCID:</td>
+          <td>
+            <a target="_blank" href="https://orcid.org/{{ person.orcid }}">
+                {{ person.orcid }}
+            </a>
+          </td>
+        </tr>
+      {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Scopus</h3>
+
+      {% if person.scopus_key %}
 
         <table class="s-table">
-            <tbody>
-            <tr>
-                <td>Університет:</td>
-                <td>{{ person.department.faculty.university.name }}</td>
-            </tr>
-
-            <tr>
-                <td>Факультет:</td>
-                <td>{{ person.department.faculty.name }}</td>
-            </tr>
-
-            <tr>
-                <td>Кафедра:</td>
-                <td>{{ person.department.name }}</td>
-            </tr>
-
-            {% if person.orcid %}
-                <tr>
-                    <td>ORCID:</td>
-                    <td>
-                        <a target="_blank" href="https://orcid.org/{{ person.orcid }}">
-                            {{ person.orcid }}
-                        </a>
-                    </td>
-                </tr>
-            {% endif %}
-            </tbody>
+          <tbody>
+          <tr>
+            <td>ID:</td>
+            <td>
+              <a target="_blank"
+                 href="https://www.scopus.com/authid/detail.uri?authorId={{ person.scopus_key }}">
+                  {{ person.scopus_key }}
+              </a>
+            </td>
+          </tr>
+          </tbody>
         </table>
+      {% endif %}
+
+    <div class="chart-wrap">
+      <div id="scopus" class="chart"></div>
     </div>
+  </div>
 
-    <div class="card">
-        <h3>Scopus</h3>
+  <div class="card">
+    <h3>Google Scholar</h3>
 
-        {% if person.scopus_key %}
-
-            <table class="s-table">
-                <tbody>
-                <tr>
-                    <td>ID:</td>
-                    <td>
-                        <a target="_blank"
-                           href="https://www.scopus.com/authid/detail.uri?authorId={{ person.scopus_key }}">
-                            {{ person.scopus_key }}
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        {% endif %}
-
-        <div class="chart-wrap">
-            <div id="scopus" class="chart"></div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>Google Scholar</h3>
-
-        {% if person.google_scholar_key %}
-            <table class="s-table">
-                <tbody>
-                <tr>
-                    <td>ID:</td>
-                    <td>
-                        <a target="_blank"
-                           href="https://scholar.google.com.ua/citations?hl=ru&user={{ person.google_scholar_key }}">
-                            {{ person.google_scholar_key }}
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        {% endif %}
-
-        <div class="chart-wrap">
-            <div id="google-scholar" class="chart"></div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>Web of Science</h3>
-
-        {% if person.wos_key %}
-            <table class="s-table">
-                <tbody>
-                <tr>
-                    <td>ID:</td>
-                    <td>
-                        <a target="_blank" href="http://www.researcherid.com/rid/{{ person.wos_key }}">
-                            {{ person.wos_key }}
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        {% endif %}
-
-        <div class="chart-wrap">
-            <div id="wos" class="chart"></div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>Semantic Scholar</h3>
-
-        {% if person.semantic_scholar_key %}
-            <table class="s-table">
-                <tbody>
-                <tr>
-                    <td>ID:</td>
-                    <td>{{ person.semantic_scholar_key }}</td>
-                </tr>
-                </tbody>
-            </table>
-        {% endif %}
-
-        <div class="chart-wrap">
-            <div id="semantic-scholar" class="chart"></div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>Статті</h3>
-
-        <table id="articles" class="row-border hover data-table">
-            <thead>
-            <tr>
-                <th>Заголовок</th>
-                <th>Scopus</th>
-                <th>Google Scholar</th>
-                <th>Web of Science</th>
-                <th>Semantic Scholar</th>
-            </tr>
-            </thead>
-
-            <tbody></tbody>
+      {% if person.google_scholar_key %}
+        <table class="s-table">
+          <tbody>
+          <tr>
+            <td>ID:</td>
+            <td>
+              <a target="_blank"
+                 href="https://scholar.google.com.ua/citations?hl=ru&user={{ person.google_scholar_key }}">
+                  {{ person.google_scholar_key }}
+              </a>
+            </td>
+          </tr>
+          </tbody>
         </table>
-    </div>
+      {% endif %}
 
+    <div class="chart-wrap">
+      <div id="google-scholar" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Web of Science</h3>
+
+      {% if person.wos_key %}
+        <table class="s-table">
+          <tbody>
+          <tr>
+            <td>ID:</td>
+            <td>
+              <a target="_blank" href="http://www.researcherid.com/rid/{{ person.wos_key }}">
+                  {{ person.wos_key }}
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      {% endif %}
+
+    <div class="chart-wrap">
+      <div id="wos" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Semantic Scholar</h3>
+
+      {% if person.semantic_scholar_key %}
+        <table class="s-table">
+          <tbody>
+          <tr>
+            <td>ID:</td>
+            <td>{{ person.semantic_scholar_key }}</td>
+          </tr>
+          </tbody>
+        </table>
+      {% endif %}
+
+    <div class="chart-wrap">
+      <div id="semantic-scholar" class="chart"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Статті</h3>
+
+    <table id="articles" class="row-border hover data-table">
+      <thead>
+      <tr>
+        <th>Заголовок</th>
+        <th>Scopus</th>
+        <th>Google Scholar</th>
+        <th>Web of Science</th>
+        <th>Semantic Scholar</th>
+      </tr>
+      </thead>
+
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Співавтори</h3>
+
+    <div class="chart-wrap">
+      <div id="graph" class="chart"></div>
+    </div>
+  </div>
 {% endblock %}

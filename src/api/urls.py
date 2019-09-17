@@ -1,5 +1,5 @@
 from django.urls import path, re_path, include
-from .views import rating, faculty, snapshot, article
+from .views import rating, faculty, snapshot, article, person
 
 urlpatterns = [
     path('rating/', include([
@@ -14,6 +14,7 @@ urlpatterns = [
 
     path('persons/', include([
         re_path('(?P<person_id>[0-9]+)/snapshots/?', snapshot.SnapshotListView.as_view()),
-        re_path('(?P<person_id>[0-9]+)/articles/?', article.ArticleListView.as_view())
+        re_path('(?P<person_id>[0-9]+)/articles/?', article.ArticleListView.as_view()),
+        re_path('(?P<person_id>[0-9]+)/joint-authors/?', person.JointAuthorListView.as_view())
     ]))
 ]
