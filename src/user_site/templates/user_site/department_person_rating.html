@@ -1,15 +1,16 @@
-{% extends "user_site/base.html" %}
+{% extends 'user_site/base.html' %}
 
 {% block meta_tags %}
     {{ block.super }}
-    <meta data-name="department_id" data-content="-1">
+    <meta data-name="person_type_id" data-content="-1">
+    <meta data-name="department_id" data-content="{{ department.id }}">
 {% endblock %}
 
-{% block title %}Рейтинг кафедр{% endblock %}
+{% block title %}Рейтинг науковців кафедри "{{ department.name }}"{% endblock %}
 
 {% block content %}
     <div class="card">
-        <h3>Рейтинг кафедр</h3>
+        <h3>Рейтинг науковців кафедри "{{ department.name }}"</h3>
 
         <div class="menu-wrap">
             <label for="peron-types-select">Відображати:</label>
@@ -25,15 +26,16 @@
             <ul>
                 <li><a href="#tab-scopus">Scopus</a></li>
                 <li><a href="#tab-google-scholar">Google Scholar</a></li>
-                <li><a href="#tab-semantic-scholar">Semantic Scholar</a></li>
                 <li><a href="#tab-wos">Web of Science</a></li>
+                <li><a href="#tab-semantic-scholar">Semantic Scholar</a></li>
             </ul>
 
             <div id="tab-scopus">
+
                 <table id="scopus" class="data-table">
                     <thead>
                     <tr>
-                        <th>Кафедра</th>
+                        <th>ПІБ</th>
                         <th>Індекс Хірша</th>
                         <th>Документи</th>
                         <th>Цитування</th>
@@ -45,10 +47,11 @@
             </div>
 
             <div id="tab-google-scholar">
+
                 <table id="google-scholar" class="data-table">
                     <thead>
                     <tr>
-                        <th>Кафедра</th>
+                        <th>ПІБ</th>
                         <th>Індекс Хірша</th>
                         <th>Цитування</th>
                     </tr>
@@ -58,13 +61,13 @@
                 </table>
             </div>
 
-            <div id="tab-semantic-scholar">
-                <table id="semantic-scholar" class="data-table">
+            <div id="tab-wos">
+
+                <table id="wos" class="data-table">
                     <thead>
                     <tr>
-                        <th>Кафедра</th>
-                        <th>Citation Velocity</th>
-                        <th>Influential Citation Count</th>
+                        <th>ПІБ</th>
+                        <th>Публікації</th>
                     </tr>
                     </thead>
 
@@ -72,17 +75,20 @@
                 </table>
             </div>
 
-            <div id="tab-wos">
-                <table id="wos" class="data-table">
+            <div id="tab-semantic-scholar">
+
+                <table id="semantic-scholar" class="data-table">
                     <thead>
                     <tr>
-                        <th>Кафедра</th>
-                        <th>Публікації</th>
+                        <th>ПІБ</th>
+                        <th>Citation Velocity</th>
+                        <th>Influential Citation Count</th>
                     </tr>
                     </thead>
 
                     <tbody></tbody>
                 </table>
+
             </div>
         </div>
     </div>

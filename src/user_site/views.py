@@ -52,6 +52,15 @@ class FacultyRatingView(ConfigMixin, TemplateView):
 class DepartmentRatingView(ConfigMixin, TemplateView):
     template_name = 'user_site/department_rating.html'
 
+class DepartmentPersonRatingView(ConfigMixin,TemplateView):
+    template_name = 'user_site/department_person_rating.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['person_types'] = tuple(core_queries.fetch_person_types())
+        data['department'] = core_queries.fetch_department(self.kwargs['department_id'])
+        return data
+
 
 class PersonView(ConfigMixin, TemplateView):
     template_name = 'user_site/person.html'
