@@ -1,11 +1,17 @@
 {% extends "user_site/base.html" %}
 
+{% block meta_tags %}
+    {{ block.super }}
+    <meta data-name="faculty_id" data-content="{{ faculty.id }}">
+{% endblock %}
 
-{% block title %}Рейтинг кафедр{% endblock %}
+
+{% block title %}Рейтинг кафедр факультету "{{ faculty.name }}"{% endblock %}
 
 {% block content %}
     <div class="card">
-        <h3>Рейтинг кафедр</h3>
+        <h3>Рейтинг кафедр факультету "{{ faculty.name }}"</h3>
+
 
         <div id="tabs" class="tabs">
             <ul>

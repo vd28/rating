@@ -1,4 +1,4 @@
-onPageLoad('faculty_rating', () => {
+onPageLoad('faculty_department_rating', () => {
 
   $('#tabs').tabs();
 
@@ -17,9 +17,10 @@ onPageLoad('faculty_rating', () => {
     ajax: (data, callback, settings) => {
 
       const params = $.param(buildPaginationParams(data));
-      const url = params ? '/api/rating/faculties/?' + params : '/api/rating/faculties/';
+      const url = params ? '/api/rating/departments/?' + params : '/api/rating/departments/';
       const revisionId = $('meta[data-name="revision_id"]').attr('data-content');
       const universityId = $('meta[data-name="university_id"]').attr('data-content');
+      const facultyId = $('meta[data-name="faculty_id"]').attr('data-content');
 
       $.ajax({
         method: 'POST',
@@ -29,12 +30,13 @@ onPageLoad('faculty_rating', () => {
         data: JSON.stringify({
           snapshot: settings.sTableId,
           revision_id: revisionId,
-          university_id: universityId,
+          //university_id: universityId,
+          faculty_id: facultyId
         }),
         success: response => {
           const payload = response.payload;
-          payload.objects.forEach(faculty => {
-            faculty.linkEl = `<a href="/faculty-department/${faculty.id}">${faculty.name}</a>`
+          payload.objects.forEach(department => {
+            department.linkEl = `<a href="/department-person/${department.id}">${department.name}</a>`
           });
           callback({
             draw: data.draw,
