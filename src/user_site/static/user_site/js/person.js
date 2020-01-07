@@ -3,15 +3,39 @@ onPageLoad('person', () => {
   function drawGraph(target, data) {
     const graph = new Dracula.Graph();
 
-    graph.addNode(data.self.id, {label: data.self.full_name});
+    var render = function (r, n) {
+      console.log(r,n)
+      var x = 0;
+      var y = 0 ;
+      var frame = r.ellipse(x , y , 3*n.label.length, 25);
+      frame.attr({
+          fill: n.Color,
+          r: n.Radius,
+          'stroke-width': (n.distance+'px')
+      });
+      /* the Raphael set is obligatory, containing all you want to display */
+      var set = r.set().push(frame,
+          /* custom objects go here */
+          r.text(x, y ,n.label)
+      );
+      return set;
+    };
 
+    graph.addNode(data.self.id, {render: render,label: data.self.full_name});
+
+    var max_length = data.self.full_name.length;
     data.joint_authors.forEach(person => {
-      graph.addNode(person.id, {label: `${person.full_name} (${person.articles_count})`});
+      if(max_length < person.full_name.length){
+        max_length = person.full_name.length;
+      }
+      graph.addNode(person.id, {render: render,label: `${person.full_name} (${person.articles_count})`});
       graph.addEdge(person.id, data.self.id);
     });
 
     new Dracula.Layout.Spring(graph).layout();
-    new Dracula.Renderer.Raphael(target, graph, $(target).width(), 600).draw();
+    var render = new Dracula.Renderer.Raphael(target, graph, $(target).width()  , 600);
+    render.radius = max_length*5;
+    render.draw();
   }
 
   function buildHistoryChart(selector, data, options, timezone) {

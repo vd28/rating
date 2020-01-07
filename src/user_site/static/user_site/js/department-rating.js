@@ -78,7 +78,7 @@ onPageLoad('department_rating', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'name', data: 'name', targets: 0},
+      {name: 'name', data: 'linkEl', targets: 0},
       {name: 'h_index', data: 'h_index', targets: 1},
       {name: 'citations', data: 'citations', targets: 2}
     ]
@@ -92,7 +92,7 @@ onPageLoad('department_rating', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'name', data: 'name', targets: 0},
+      {name: 'name', data: 'linkEl', targets: 0},
       {name: 'citation_velocity', data: 'citation_velocity', targets: 1},
       {name: 'influential_citation_count', data: 'influential_citation_count', targets: 2}
     ]
@@ -106,7 +106,7 @@ onPageLoad('department_rating', () => {
         searchable: false,
         className: "dt-center"
       },
-      {name: 'name', data: 'name', targets: 0},
+      {name: 'name', data: 'linkEl', targets: 0},
       {name: 'publications', data: 'publications', targets: 1}
     ]
   }));
