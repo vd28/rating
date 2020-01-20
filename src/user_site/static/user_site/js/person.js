@@ -1,41 +1,123 @@
 onPageLoad('person', () => {
 
-  function drawGraph(target, data) {
-    const graph = new Dracula.Graph();
+  function  drawGraph(target,data){
 
-    var render = function (r, n) {
-      console.log(r,n)
-      var x = 0;
-      var y = 0 ;
-      var frame = r.ellipse(x , y , 3*n.label.length, 25);
-      frame.attr({
-          fill: n.Color,
-          r: n.Radius,
-          'stroke-width': (n.distance+'px')
-      });
-      /* the Raphael set is obligatory, containing all you want to display */
-      var set = r.set().push(frame,
-          /* custom objects go here */
-          r.text(x, y ,n.label)
-      );
-      return set;
-    };
+    function arrayRandElement(arr) {
+      var rand = Math.floor(Math.random() * arr.length);
+      return arr[rand];
+    }
 
-    graph.addNode(data.self.id, {render: render,label: data.self.full_name});
+    var graph = Viva.Graph.graph();
+    var NodesData =[{"name":data.self.full_name,"id":data.self.id}];
 
-    var max_length = data.self.full_name.length;
     data.joint_authors.forEach(person => {
-      if(max_length < person.full_name.length){
-        max_length = person.full_name.length;
-      }
-      graph.addNode(person.id, {render: render,label: `${person.full_name} (${person.articles_count})`});
-      graph.addEdge(person.id, data.self.id);
+     NodesData.push({"name":`${person.full_name} (${person.articles_count})`,"id":person.id})
     });
 
-    new Dracula.Layout.Spring(graph).layout();
-    var render = new Dracula.Renderer.Raphael(target, graph, $(target).width()  , 600);
-    render.radius = max_length*5;
-    render.draw();
+    for(var i=0;i<NodesData.length;i++){
+      graph.addNode(NodesData[i].id,NodesData[i].name)
+    }
+    var countOfNodes = 0;
+
+
+
+
+
+    data.joint_authors.forEach(person => {
+      countOfNodes++;
+      graph.addLink(person.id, data.self.id ,{connectionStrength:person.articles_count>4?  (3/1.5) :(countOfNodes<5 ? (person.articles_count==1 ? person.articles_count*1.2 : person.articles_count) : person.articles_count/1.5) });
+    });
+
+    var middle =graph.getNode(data.self.id);
+    middle.isPinned = true;
+    if(countOfNodes > 6){
+      var idealLength = 120;
+    }
+    else{
+      var idealLength = 90;
+    }
+
+
+
+   	var layout = Viva.Graph.Layout.forceDirected(graph, {
+		springLength : 100,
+		springCoeff : 0.0008,
+		dragCoeff : 0.02,
+		gravity : -1.2,
+		springTransform: function (link, spring) {
+                    spring.length = idealLength * (link.data.connectionStrength);
+                  }
+	  });
+
+	  var middle = graph.getNode(data.self.id);
+    layout.pinNode(middle, true);
+    var colors = [
+                        "#1f77b4", "#aec7e8",
+                        "#ff7f0e", "#ffbb78",
+                        "#2ca02c", "#98df8a",
+                        "#d62728", "#ff9896",
+                        "#9467bd", "#c5b0d5",
+                        "#8c564b", "#c49c94",
+                        "#e377c2", "#f7b6d2",
+                        "#7f7f7f", "#c7c7c7",
+                        "#bcbd22", "#dbdb8d",
+                        "#17becf", "#9edae5"
+                        ];
+
+
+     var highlightRelatedNodes = function(nodeId, isOn) {
+                   // just enumerate all realted nodes and update link color:
+                   graph.forEachLinkedNode(nodeId, function(node, link){
+                       var linkUI = graphics.getLinkUI(link.id);
+                       if (linkUI) {
+                           // linkUI is a UI object created by graphics below
+                           linkUI.attr('stroke', isOn ? 'red' : 'gray');
+                       }
+                   });
+                };
+
+	  document.getElementById("graph").style.width =  $(target).width();
+    document.getElementById("graph").style.height = "800px";
+	  var graphics = Viva.Graph.View.svgGraphics(), nodeSize = 24;
+
+	  graphics.node(function(node){
+
+                          var ui = Viva.Graph.svg('g'),
+                          circle = Viva.Graph.svg('circle')
+                          .attr('r', 7)
+                          .attr('width', nodeSize)
+                          .attr('height', nodeSize)
+                          .attr("fill", arrayRandElement(colors)),
+                          svgText = Viva.Graph.svg('text').attr('y', '-' + (nodeSize)/2 + 'px').attr('x','-' + (nodeSize*4) + 'px').text(node.data);
+
+                         ui.append(svgText);
+                         ui.append(circle);
+
+
+                         $(ui).hover(function() { // mouse over
+                          highlightRelatedNodes(node.id, true);
+                         }, function() { // mouse out
+                          highlightRelatedNodes(node.id, false);
+                         });
+
+                         $(ui).click(function() { // mouse click
+                          document.location.href = "/persons/{id}/".replace('{id}',node.id)
+                         });
+
+                         return ui;
+    }).placeNode(function(nodeUI, pos) { nodeUI.attr('transform','translate(' +(pos.x ) + ',' + (pos.y) +')');});
+
+
+
+
+
+
+
+    var renderer = Viva.Graph.View.renderer(graph,{
+    layout:layout,
+    graphics:graphics,
+    container:document.getElementById('graph')});
+    renderer.run();
   }
 
   function buildHistoryChart(selector, data, options, timezone) {
@@ -155,7 +237,7 @@ onPageLoad('person', () => {
     dataType: 'json',
     cache: false,
     success: response => {
-      drawGraph('#graph', response.payload);
+          drawGraph('#graph', response.payload);
     }
   });
 
@@ -168,6 +250,7 @@ onPageLoad('person', () => {
     success: response => {
 
       const payload = response.payload;
+
 
       buildHistoryChart(
         'scopus', payload['scopus'],
