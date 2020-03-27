@@ -52,7 +52,8 @@ class FacultyRatingView(ConfigMixin, TemplateView):
 class DepartmentRatingView(ConfigMixin, TemplateView):
     template_name = 'user_site/department_rating.html'
 
-class DepartmentPersonRatingView(ConfigMixin,TemplateView):
+
+class DepartmentPersonRatingView(ConfigMixin, TemplateView):
     template_name = 'user_site/department_person_rating.html'
 
     def get_context_data(self, **kwargs):
@@ -61,12 +62,13 @@ class DepartmentPersonRatingView(ConfigMixin,TemplateView):
         data['department'] = core_queries.fetch_department(self.kwargs['department_id'])
         return data
 
+
 class FacultyDepartmentRatingView(ConfigMixin, TemplateView):
     template_name = 'user_site/faculty_department_rating.html'
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['faculty']=core_queries.fetch_faculty(self.kwargs['faculty_id'])
+        data['faculty'] = core_queries.fetch_faculty(self.kwargs['faculty_id'])
         return data
 
 
@@ -86,3 +88,11 @@ class PersonsSearchResultsView(ConfigMixin, TemplateView):
         data = super().get_context_data(**kwargs)
         data['persons'] = tuple(core_queries.search_persons(self.request.GET.get('t', None)))
         return data
+
+
+class DocKnowledgeView(ConfigMixin, TemplateView):
+    template_name = 'user_site/doc_knowledge.html'
+
+
+class CooperatingView(ConfigMixin, TemplateView):
+    template_name = 'user_site/cooperating.html'

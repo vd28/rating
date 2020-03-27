@@ -46,6 +46,9 @@
                 <a class="top-nav__dropdown-link" href="{% url 'person_rating' %}">Науковців</a>
             </div>
         </div>
+        <a class="top-nav__link" href="{% url 'doc_knowledge' %}">Документи по галузям знань</a>
+        <a class="top-nav__link" href="{% url 'cooperating' %}">Співробітництво</a>
+
         <a class="top-nav__link top-nav__link_state" href="javascript:void(0);"><i class="fas fa-bars"></i></a>
     </div>
 </div>
@@ -102,6 +105,7 @@
         <script type="text/es6" src="{% static 'user_site/js/person.js' %}"></script>
         <script type="text/es6" src="{% static 'user_site/js/department-person-rating.js' %}"></script>
         <script type="text/es6" src="{% static 'user_site/js/faculty-department-rating.js' %}"></script>
+        <script type="text/es6" src="{% static 'user_site/js/doc-knowledge.js' %}"></script>
     {% endcompress %}
 {% endblock %}
 

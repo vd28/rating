@@ -1,0 +1,638 @@
+{% extends 'user_site/base.html' %}
+
+{% block content %}
+ <style>
+  td.style1 { vertical-align:top; text-align:center; padding-left:0px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; font-weight:bold; color:#323232; font-family:'Arial'; font-size:11pt; background-color:#FFFFFF }
+      th.style1 { vertical-align:top; text-align:center; padding-left:0px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; font-weight:bold; color:#323232; font-family:'Arial'; font-size:11pt; background-color:#FFFFFF }
+   table {
+    width: 600px; /* Ширина таблицы */
+    margin: auto; /* Выравниваем таблицу по центру окна  */
+   border-collapse: collapse; /* Убираем двойные линии между ячейками */
+   }
+   td, th {
+    padding: 3px; /* Поля вокруг содержимого таблицы */
+    text-align: center; /* Выравниваем текст по центру ячейки */
+    border: 1px solid black; /* Параметры рамки */
+   }
+   th {
+    background: #b0e0e6; /* Цвет фона */
+   }
+   td {
+
+  </style>
+<div class="card">
+<table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
+        <col class="col0">
+        <col class="col1">
+        <col class="col2">
+        <tbody>
+          <tr class="row0">
+            <td class="column0 style1 s">Название организации</td>
+            <td class="column1 style2 s">Документы</td>
+            
+          </tr>
+          <tr class="row1">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60011313&amp;origin=AffiliationProfile" title="">National Academy of Sciences in Ukraine</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60011313&amp;origin=AffiliationProfile" title="">27</a></td>
+            
+          </tr>
+          <tr class="row2">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60068509&amp;origin=AffiliationProfile" title="">V.M.Glushkov Institute of Cybernetics</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60068509&amp;origin=AffiliationProfile" title="">20</a></td>
+             
+          </tr>
+          <tr class="row3">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60117186&amp;origin=AffiliationProfile" title="">Kherson State Agrarian University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60117186&amp;origin=AffiliationProfile" title="">18</a></td>
+             
+          </tr>
+          <tr class="row4">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60023137&amp;origin=AffiliationProfile" title="">Taras Shevchenko National University of Kyiv</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60023137&amp;origin=AffiliationProfile" title="">16</a></td>
+             
+          </tr>
+          <tr class="row5">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60009424&amp;origin=AffiliationProfile" title="">Jihoceská Univerzita v Ceských Budejovicích</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60009424&amp;origin=AffiliationProfile" title="">13</a></td>
+             
+          </tr>
+          <tr class="row6">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60013756&amp;origin=AffiliationProfile" title="">University of Warsaw</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60013756&amp;origin=AffiliationProfile" title="">12</a></td>
+             
+          </tr>
+          <tr class="row7">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60110963&amp;origin=AffiliationProfile" title="">Kherson National Technical University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60110963&amp;origin=AffiliationProfile" title="">11</a></td>
+             
+          </tr>
+          <tr class="row8">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60068526&amp;origin=AffiliationProfile" title="">M.G. Kholodny Institute of Botany</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60068526&amp;origin=AffiliationProfile" title="">10</a></td>
+             
+          </tr>
+          <tr class="row9">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60027251&amp;origin=AffiliationProfile" title="">V. N. Karazin Kharkiv National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60027251&amp;origin=AffiliationProfile" title="">9</a></td>
+             
+          </tr>
+          <tr class="row10">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60031135&amp;origin=AffiliationProfile" title="">Academy of Sciences of the Czech Republic</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60031135&amp;origin=AffiliationProfile" title="">8</a></td>
+             
+          </tr>
+          <tr class="row11">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60117518&amp;origin=AffiliationProfile" title="">Kherson State Maritime Academy</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60117518&amp;origin=AffiliationProfile" title="">8</a></td>
+             
+          </tr>
+          <tr class="row12">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60019660&amp;origin=AffiliationProfile" title="">Alpen-Adria-Universität Klagenfurt</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60019660&amp;origin=AffiliationProfile" title="">7</a></td>
+             
+          </tr>
+          <tr class="row13">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60021463&amp;origin=AffiliationProfile" title="">Khmelnytsky National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60021463&amp;origin=AffiliationProfile" title="">7</a></td>
+             
+          </tr>
+          <tr class="row14">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60045994&amp;origin=AffiliationProfile" title="">Institute of Botany of the Academy of Sciences of the Czech Republic</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60045994&amp;origin=AffiliationProfile" title="">7</a></td>
+             
+          </tr>
+          <tr class="row15">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60070109&amp;origin=AffiliationProfile" title="">Zaporizhzhia National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60070109&amp;origin=AffiliationProfile" title="">7</a></td>
+             
+          </tr>
+          <tr class="row16">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60008588&amp;origin=AffiliationProfile" title="">Eidgenössische Forschungsanstalt fur Wald, Schnee Und Landschaft Eth-Bereichs</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60008588&amp;origin=AffiliationProfile" title="">6</a></td>
+             
+          </tr>
+          <tr class="row17">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60014383&amp;origin=AffiliationProfile" title="">Polish Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60014383&amp;origin=AffiliationProfile" title="">6</a></td>
+             
+          </tr>
+          <tr class="row18">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60019622&amp;origin=AffiliationProfile" title="">Lviv State University of Physical Culture</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60019622&amp;origin=AffiliationProfile" title="">6</a></td>
+             
+          </tr>
+          <tr class="row19">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60028612&amp;origin=AffiliationProfile" title="">Wladyslaw Szafer Institute of Botany of the Polish Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60028612&amp;origin=AffiliationProfile" title="">6</a></td>
+             
+          </tr>
+          <tr class="row20">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=122875280&amp;origin=AffiliationProfile" title="">Garuda AI V.B.</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=122875280&amp;origin=AffiliationProfile" title="">5</a></td>
+             
+          </tr>
+          <tr class="row21">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60021331&amp;origin=AffiliationProfile" title="">Russian Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60021331&amp;origin=AffiliationProfile" title="">5</a></td>
+             
+          </tr>
+          <tr class="row22">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60025352&amp;origin=AffiliationProfile" title="">The Natural History Museum, London</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60025352&amp;origin=AffiliationProfile" title="">5</a></td>
+             
+          </tr>
+          <tr class="row23">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60110661&amp;origin=AffiliationProfile" title="">Institute of Steppe of the Ural Branch of the Russian Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60110661&amp;origin=AffiliationProfile" title="">5</a></td>
+             
+          </tr>
+          <tr class="row24">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60003003&amp;origin=AffiliationProfile" title="">Università degli Studi di Perugia</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60003003&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row25">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60007457&amp;origin=AffiliationProfile" title="">Lomonosov Moscow State University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60007457&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row26">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60017697&amp;origin=AffiliationProfile" title="">Università degli Studi di Palermo</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60017697&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row27">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60018265&amp;origin=AffiliationProfile" title="">Vasyl Stefanyk Precarpathian National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60018265&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row28">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60023020&amp;origin=AffiliationProfile" title="">Universitat Autònoma de Barcelona</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60023020&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row29">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60025670&amp;origin=AffiliationProfile" title="">Ostravská Univerzita v Ostrave</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60025670&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row30">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60026298&amp;origin=AffiliationProfile" title="">Università degli Studi di Camerino</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60026298&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row31">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60030553&amp;origin=AffiliationProfile" title="">Universite de Rennes 1</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60030553&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row32">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60068815&amp;origin=AffiliationProfile" title="">University of Belgrade</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60068815&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row33">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60070993&amp;origin=AffiliationProfile" title="">Komarov Botanical Institute, Russian Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60070993&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row34">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60103725&amp;origin=AffiliationProfile" title="">Kyiv National University of Trade and Economics</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60103725&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row35">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60105587&amp;origin=AffiliationProfile" title="">Écosystèmes, Biodiversité, Évolution</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60105587&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row36">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60109889&amp;origin=AffiliationProfile" title="">Vinnytsia Mykhailo Kotsiubynskyi State Pedagogical University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60109889&amp;origin=AffiliationProfile" title="">4</a></td>
+             
+          </tr>
+          <tr class="row37">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=121977192&amp;origin=AffiliationProfile" title="">Vinnytsia Cooperative Institute</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=121977192&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row38">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60000130&amp;origin=AffiliationProfile" title="">Universidad de Murcia</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60000130&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row39">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60002952&amp;origin=AffiliationProfile" title="">Helsingin Yliopisto</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60002952&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row40">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60008259&amp;origin=AffiliationProfile" title="">Ivano-Frankivsk National Technical University of Oil and Gas</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60008259&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row41">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60008931&amp;origin=AffiliationProfile" title="">University of Lodz</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60008931&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row42">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60010146&amp;origin=AffiliationProfile" title="">Università degli Studi di Catania</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60010146&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row43">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60019499&amp;origin=AffiliationProfile" title="">Chinese Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60019499&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row44">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60020726&amp;origin=AffiliationProfile" title="">Oles Honchar Dnipro National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60020726&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row45">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60021361&amp;origin=AffiliationProfile" title="">Uniwersytet Jagielloński w Krakowie</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60021361&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row46">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60022457&amp;origin=AffiliationProfile" title="">Karl-Franzens-Universitat Graz</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60022457&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row47">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60024147&amp;origin=AffiliationProfile" title="">Bulgarian Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60024147&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row48">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60025093&amp;origin=AffiliationProfile" title="">California Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60025093&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row49">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60027611&amp;origin=AffiliationProfile" title="">Institute of Microbiology of the Academy of Sciences of the Czech Republic</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60027611&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row50">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60028311&amp;origin=AffiliationProfile" title="">Museum National d'Histoire Naturelle</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60028311&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row51">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60029170&amp;origin=AffiliationProfile" title="">Lunds Universitet</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60029170&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row52">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60029543&amp;origin=AffiliationProfile" title="">Masaryk University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60029543&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row53">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60069257&amp;origin=AffiliationProfile" title="">Belgorod State University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60069257&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row54">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60080765&amp;origin=AffiliationProfile" title="">Lviv Polytechnic National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60080765&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row55">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60103842&amp;origin=AffiliationProfile" title="">Central Siberian Botanical Garden, SB RAS</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60103842&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row56">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60104565&amp;origin=AffiliationProfile" title="">Mariupol State University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60104565&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row57">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60104694&amp;origin=AffiliationProfile" title="">Interregional Academy of Personnel Management</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60104694&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row58">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60105143&amp;origin=AffiliationProfile" title="">Institute of Biology KarRC RAS</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60105143&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row59">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60108777&amp;origin=AffiliationProfile" title="">Volodymyr Dahl East Ukrainian National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60108777&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row60">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60110906&amp;origin=AffiliationProfile" title="">Kyiv National University of Culture and Arts</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60110906&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row61">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60113289&amp;origin=AffiliationProfile" title="">Institute of Biodiversity and Ecosystem Research at the Bulgarian Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60113289&amp;origin=AffiliationProfile" title="">3</a></td>
+             
+          </tr>
+          <tr class="row62">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=114539766&amp;origin=AffiliationProfile" title="">LLC Information Software Systems</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=114539766&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row63">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=114732904&amp;origin=AffiliationProfile" title="">Oleksandr Dovzhenko Hlukhiv National Pedagogical University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=114732904&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row64">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=120651703&amp;origin=AffiliationProfile" title="">Nizhnedneprovskiy National Nature Park</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=120651703&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row65">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=122909243&amp;origin=AffiliationProfile" title="">Pandora Core AG</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=122909243&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row66">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60002838&amp;origin=AffiliationProfile" title="">Università degli Studi di Siena</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60002838&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row67">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60003217&amp;origin=AffiliationProfile" title="">Erciyes Üniversitesi</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60003217&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row68">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60004095&amp;origin=AffiliationProfile" title="">University of Lucknow</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60004095&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row69">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60004366&amp;origin=AffiliationProfile" title="">Nigde Omer Halisdemir University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60004366&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row70">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60004400&amp;origin=AffiliationProfile" title="">Debreceni Egyetem</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60004400&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row71">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60004700&amp;origin=AffiliationProfile" title="">Uniwersytet Opolski</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60004700&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row72">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60006754&amp;origin=AffiliationProfile" title="">Consejo Superior de Investigaciones Científicas</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60006754&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row73">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60010330&amp;origin=AffiliationProfile" title="">Slovak Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60010330&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row74">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60010644&amp;origin=AffiliationProfile" title="">Hungarian Natural History Museum</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60010644&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row75">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60012259&amp;origin=AffiliationProfile" title="">Università degli Studi di Torino</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60012259&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row76">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60014168&amp;origin=AffiliationProfile" title="">Uniwersytet im. Adama Mickiewicza w Poznaniu</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60014168&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row77">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60015331&amp;origin=AffiliationProfile" title="">Aristotle University of Thessaloniki</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60015331&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row78">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60016238&amp;origin=AffiliationProfile" title="">Anadolu Üniversitesi</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60016238&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row79">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60016605&amp;origin=AffiliationProfile" title="">Charles University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60016605&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row80">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60020346&amp;origin=AffiliationProfile" title="">Altai State University, Barnaul</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60020346&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row81">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60020919&amp;origin=AffiliationProfile" title="">Università degli Studi della Basilicata</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60020919&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row82">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60021199&amp;origin=AffiliationProfile" title="">Consiglio Nazionale delle Ricerche</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60021199&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row83">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60021311&amp;origin=AffiliationProfile" title="">Ernst-Moritz-Arndt-Universität Greifswald</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60021311&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row84">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60021541&amp;origin=AffiliationProfile" title="">Royal Botanic Garden Edinburgh</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60021541&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row85">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60022214&amp;origin=AffiliationProfile" title="">Finnish Museum of Natural History</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60022214&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row86">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60022367&amp;origin=AffiliationProfile" title="">CREAF - Centre de Recerca Ecològica i Aplicacions Forestals</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60022367&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row87">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60024421&amp;origin=AffiliationProfile" title="">Uniwersytet Warminsko-Mazurski w Olsztynie</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60024421&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row88">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60026796&amp;origin=AffiliationProfile" title="">Universidad Autónoma de Madrid</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60026796&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row89">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60027282&amp;origin=AffiliationProfile" title="">Universidad Complutense de Madrid</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60027282&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row90">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60028218&amp;origin=AffiliationProfile" title="">Alma Mater Studiorum Università di Bologna</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60028218&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row91">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60028608&amp;origin=AffiliationProfile" title="">Slovenian Forestry Institute</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60028608&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row92">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60029616&amp;origin=AffiliationProfile" title="">Aarhus Universitet</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60029616&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row93">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60030840&amp;origin=AffiliationProfile" title="">Københavns Universitet</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60030840&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row94">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60032982&amp;origin=AffiliationProfile" title="">Financial University under the Government of the Russian Federation</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60032982&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row95">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60037589&amp;origin=AffiliationProfile" title="">Museu Nacional de História Natural e da Ciência, Universidade de Lisboa</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60037589&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row96">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60068856&amp;origin=AffiliationProfile" title="">University of Tartu</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60068856&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row97">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60068865&amp;origin=AffiliationProfile" title="">Estonian Institute of Ecology</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60068865&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row98">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60070111&amp;origin=AffiliationProfile" title="">I.I. Schmalhausen Institute of Zoology of National Academy of Sciences of Ukraine</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60070111&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row99">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60072626&amp;origin=AffiliationProfile" title="">Missouri Botanical Garden Antananarivo</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60072626&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row100">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60077995&amp;origin=AffiliationProfile" title="">Latvijas Valsts Mežzinatnes Instituts Silava</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60077995&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row101">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60080743&amp;origin=AffiliationProfile" title="">Korea Polar Research Institute</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60080743&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row102">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60090002&amp;origin=AffiliationProfile" title="">Yugra State University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60090002&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row103">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60091001&amp;origin=AffiliationProfile" title="">Academia Română, Institutul de Biologie Bucureşti</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60091001&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row104">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60096197&amp;origin=AffiliationProfile" title="">Karelian Research Centre, Russian Academy of Sciences</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60096197&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row105">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60102163&amp;origin=AffiliationProfile" title="">Ternopil National Economic University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60102163&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row106">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60103702&amp;origin=AffiliationProfile" title="">Ural Federal University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60103702&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row107">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60106051&amp;origin=AffiliationProfile" title="">Universidade de Lisboa</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60106051&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row108">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60110166&amp;origin=AffiliationProfile" title="">Botanical Garden-Institute FEB RAS</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60110166&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row109">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60110624&amp;origin=AffiliationProfile" title="">University of Warsaw Biological and Chemical Research Centre</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60110624&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row110">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60112478&amp;origin=AffiliationProfile" title="">Fondazione Museo Civico di Rovereto</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60112478&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row111">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60115933&amp;origin=AffiliationProfile" title="">V.O.Sukhomlynskyi Mykolaiv National University</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60115933&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row112">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=60123159&amp;origin=AffiliationProfile" title="">National Academy of Educational Sciences of Ukraine</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=60123159&amp;origin=AffiliationProfile" title="">2</a></td>
+             
+          </tr>
+          <tr class="row113">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=100577655&amp;origin=AffiliationProfile" title="">Southwest Anatolia Forest Research Institute</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=100577655&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+          <tr class="row114">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=101765391&amp;origin=AffiliationProfile" title="">Museum of Nature and Man</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=101765391&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+          <tr class="row115">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=106010318&amp;origin=AffiliationProfile" title="">Conservatoire Botanique National du Massif Central</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=106010318&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+          <tr class="row116">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=106637489&amp;origin=AffiliationProfile" title="">Faculty of Science</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=106637489&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+          <tr class="row117">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=108384207&amp;origin=AffiliationProfile" title="">Le Bourg</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=108384207&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+          <tr class="row118">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=108397919&amp;origin=AffiliationProfile" title="">Nature Research Centre</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=108397919&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+
+          <tr class="row119">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=109563738&amp;origin=AffiliationProfile" title="">Navarro Villoslada</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=109563738&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+          <tr class="row120">
+            <td class="column0 style3 s"><a href="https://www.scopus.com/affil/profile.uri?afid=112450387&amp;origin=AffiliationProfile" title="">Horia Hulubei National Institute for R and D in Physics and Nuclear Engineering</a></td>
+            <td class="column1 style4 n"><a href="https://www.scopus.com/search/submit/affiliation.uri?affiliationId=60010672&amp;navName=scoafid&amp;clusterData=112450387&amp;origin=AffiliationProfile" title="">1</a></td>
+             
+          </tr>
+  </tbody>
+    </table>
+</div>
+{% endblock %}
