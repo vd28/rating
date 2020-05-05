@@ -227,6 +227,88 @@ onPageLoad('person', () => {
     )
   }
 
+  function findMaxId(payload,repos){
+        var id =[]
+
+        for(var i = 0; i<payload[repos].length;i++){
+            id.push(payload[repos][i]['revision']['id'])
+        }
+        var min = id[0];
+        var max = min;
+        for (i = 1; i < id.length; ++i) {
+            if (id[i] > max) max = id[i];
+            if (id[i] < min) min = id[i];
+        }
+        return max
+
+
+        };
+   function SetTimeAverageCitSum(payload){
+       var timezone = 'UTC';
+       var max = findMaxId(payload,'scopus');
+       var scopus_citations = 0;
+       for(var i = 0; i<payload['scopus'].length;i++){
+            if(payload['scopus'][i]['revision']['id'] == max){
+                document.getElementById('data_time').innerHTML=luxon.DateTime
+          .fromISO(payload['scopus'][i]['revision']['created_at'])
+          .setLocale('uk')
+          .setZone(timezone)
+          .toFormat('d MMMM, yyyy HH:mm');
+                document.getElementById('average_citations').innerHTML=payload['scopus'][i]['citations']/payload['scopus'][i]['documents'];
+                scopus_citations = payload['scopus'][i]['citations'];
+            }
+
+        }
+          max = findMaxId(payload,'google-scholar');
+         for(var i = 0; i<payload['google-scholar'].length;i++){
+
+             if(payload['google-scholar'][i]['revision']['id'] == max){
+                document.getElementById('sum_citations').innerHTML=(payload['google-scholar'][i]['citations'] + scopus_citations);
+
+            }
+            }
+
+   };
+
+   function SetAllIndicators(payload){
+          var max = findMaxId(payload,'scopus');
+          for(var i = 0; i<payload['scopus'].length;i++){
+            if(payload['scopus'][i]['revision']['id'] == max){
+                document.getElementById('scopus_h_index').innerHTML=payload['scopus'][i]['h_index'];
+                document.getElementById('scopus_citations').innerHTML=payload['scopus'][i]['citations'];
+                document.getElementById('scopus_documents').innerHTML=payload['scopus'][i]['documents'];
+
+            }
+        }
+            var max = findMaxId(payload,'google-scholar');
+          for(var i = 0; i<payload['google-scholar'].length;i++){
+            if(payload['google-scholar'][i]['revision']['id'] == max){
+                document.getElementById('google_h_index').innerHTML=payload['google-scholar'][i]['h_index'];
+                document.getElementById('google_citations').innerHTML=payload['google-scholar'][i]['citations'];
+            }
+        }
+
+        var max = findMaxId(payload,'wos');
+          for(var i = 0; i<payload['wos'].length;i++){
+            if(payload['wos'][i]['revision']['id'] == max){
+                document.getElementById('wos_publications').innerHTML=payload['wos'][i]['publications'];
+
+            }
+        }
+         var max = findMaxId(payload,'semantic-scholar');
+          for(var i = 0; i<payload['semantic-scholar'].length;i++){
+            if(payload['semantic-scholar'][i]['revision']['id'] == max){
+                document.getElementById('semantic_citation_velocity').innerHTML=payload['semantic-scholar'][i]['citation_velocity'];
+                document.getElementById('semantic_influential_citation_count').innerHTML=payload['semantic-scholar'][i]['influential_citation_count'];
+            }
+            console.log(2)
+        }
+
+
+   }
+
+
+
   const personId = $('meta[data-name="person_id"]').attr('data-content');
   const tz = $('meta[data-name="timezone"]').attr('data-content');
 
@@ -250,6 +332,11 @@ onPageLoad('person', () => {
     success: response => {
 
       const payload = response.payload;
+
+
+      SetTimeAverageCitSum(payload);
+      SetAllIndicators(payload)
+      console.log(payload);
 
 
       buildHistoryChart(
@@ -334,6 +421,7 @@ onPageLoad('person', () => {
     createdRow: (row, data, index) => {
       const plusHtml = `<span style="color: green">+</span>`;
       const minusHtml = `<span style="color: red">-</span>`;
+
       $('td', row).eq(1).html(data.scopus ? plusHtml : minusHtml);
       $('td', row).eq(2).html(data.google_scholar ? plusHtml : minusHtml);
       $('td', row).eq(3).html(data.wos ? plusHtml : minusHtml);

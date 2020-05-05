@@ -38,6 +38,30 @@
           </td>
         </tr>
       {% endif %}
+      <tr>
+          <td>Середнє цитування по Scopus:</td>
+          <td>
+                <div id="average_citations"></div>
+
+          </td>
+        </tr>
+      <tr>
+          <td>Сума цитування по Scopus та Google Scholar:</td>
+          <td>
+                <div id="sum_citations"></div>
+
+          </td>
+        </tr>
+
+       <tr>
+          <td>Дата оновлення:</td>
+          <td>
+                <div id="data_time"></div>
+
+          </td>
+        </tr>
+
+
       </tbody>
     </table>
   </div>
@@ -58,6 +82,26 @@
               </a>
             </td>
           </tr>
+           <tr>
+          <td>h-index:</td>
+          <td>
+                <div id="scopus_h_index"></div>
+
+          </td>
+              <tr>
+          <td>Citations:</td>
+          <td>
+                <div id="scopus_citations"></div>
+
+          </td>
+          </tr>
+             <tr>
+          <td>Documents:</td>
+          <td>
+                <div id="scopus_documents"></div>
+
+          </td>
+        </tr>
           </tbody>
         </table>
       {% endif %}
@@ -82,6 +126,20 @@
               </a>
             </td>
           </tr>
+           <tr>
+          <td>h-index:</td>
+          <td>
+                <div id="google_h_index"></div>
+
+          </td>
+           </tr>
+              <tr>
+          <td>Citations:</td>
+          <td>
+                <div id="google_citations"></div>
+
+          </td>
+          </tr>
           </tbody>
         </table>
       {% endif %}
@@ -105,6 +163,13 @@
               </a>
             </td>
           </tr>
+          <tr>
+          <td>Publications:</td>
+          <td>
+                <div id="wos_publications"></div>
+
+          </td>
+          </tr>
           </tbody>
         </table>
       {% endif %}
@@ -124,6 +189,21 @@
             <td>ID:</td>
             <td>{{ person.semantic_scholar_key }}</td>
           </tr>
+           <tr>
+          <td>Citation velocity:</td>
+          <td>
+                <div id="semantic_citation_velocity"></div>
+
+          </td>
+          </tr>
+           <tr>
+          <td>Influential citation count:</td>
+          <td>
+                <div id="semantic_influential_citation_count"></div>
+
+          </td>
+          </tr>
+
           </tbody>
         </table>
       {% endif %}

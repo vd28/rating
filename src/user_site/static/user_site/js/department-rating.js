@@ -62,7 +62,22 @@ onPageLoad('department_rating', () => {
         targets: [1, 2, 3],
         searchable: false,
         className: 'dt-center'
-      },
+      }, {targets: 2,
+                    render: function ( data, type, row ) {
+                      var color = 'black';
+                      if (data > 10) {
+                        color = 'green';
+                      }
+                      if ((data > 5 )&&(data <=10)) {
+                        color = 'yellow';
+                      }
+                      if (data <= 5) {
+                        color = 'red';
+                      }
+                      return '<span style="color:' + color + '">' + data + '</span>';
+                    }
+               }
+      ,
       {name: 'name', data: 'linkEl', targets: 0},
       {name: 'h_index', data: 'h_index', targets: 1},
       {name: 'documents', data: 'documents', targets: 2},
