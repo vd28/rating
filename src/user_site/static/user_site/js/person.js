@@ -301,7 +301,7 @@ onPageLoad('person', () => {
                 document.getElementById('semantic_citation_velocity').innerHTML=payload['semantic-scholar'][i]['citation_velocity'];
                 document.getElementById('semantic_influential_citation_count').innerHTML=payload['semantic-scholar'][i]['influential_citation_count'];
             }
-            console.log(2)
+
         }
 
 
@@ -336,7 +336,7 @@ onPageLoad('person', () => {
 
       SetTimeAverageCitSum(payload);
       SetAllIndicators(payload)
-      console.log(payload);
+
 
 
       buildHistoryChart(

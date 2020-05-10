@@ -35,6 +35,9 @@ class ConfigNotFoundView(TemplateView):
 class HomeView(ConfigMixin, TemplateView):
     template_name = 'user_site/home.html'
 
+class ClasterAnalysisView(ConfigMixin,TemplateView):
+    template_name = "user_site/claster_analysis.html"
+
 
 class PersonRatingView(ConfigMixin, TemplateView):
     template_name = 'user_site/person_rating.html'
@@ -96,3 +99,6 @@ class DocKnowledgeView(ConfigMixin, TemplateView):
 
 class CooperatingView(ConfigMixin, TemplateView):
     template_name = 'user_site/cooperating.html'
+
+class PostView(ConfigMixin, TemplateView):
+    template_name = 'user_site/post.html'

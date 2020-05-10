@@ -5,6 +5,10 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+MEDIA_DIR = os.path.join(BASE_DIR, 'img')
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/img/'
+
 NODE_MODULES = os.path.join(os.path.dirname(BASE_DIR), 'node_modules')
 
 SECRET_KEY = 'yj@v(ey2p)i8k!fk-smheuen8p-any&o9hlv4_3u1s3tma3$a!'

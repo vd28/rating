@@ -1,0 +1,43 @@
+{% extends 'user_site/base.html' %}
+
+{% block content %}
+
+<div id = 'card' >
+
+    <style>
+   ol {
+    list-style-type: none;
+    counter-reset:  item;
+   }
+   ol li::before {
+    content: counter(item) ') ';
+    counter-increment: item;
+   }
+   ul {
+    list-style-type: none;
+   }
+   ul li::before {
+    content: "●";
+   }
+
+    .date {
+      text-align: center;
+     }
+     .title{
+      text-align: center;
+      font-weight: bold;
+      font-size: 120%;
+     }
+     .img{
+        text-align: center;
+     }
+
+    </style>
+
+
+
+
+
+</div>
+{% endblock %}
+

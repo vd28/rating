@@ -12,5 +12,7 @@ urlpatterns = [
     path('department-person/<int:department_id>', views.DepartmentPersonRatingView.as_view(), name='department_person_rating'),
     path('faculty-department/<int:faculty_id>', views.FacultyDepartmentRatingView.as_view(), name='faculty_department_rating'),
     path('doc-knowledge/', views.DocKnowledgeView.as_view(), name='doc_knowledge'),
-    path('cooperating/', views.CooperatingView.as_view() ,name='cooperating')
+    path('cooperating/', views.CooperatingView.as_view() ,name='cooperating'),
+    path('claster-analysis/',views.ClasterAnalysisView.as_view(),name="claster_analysis"),
+    path('post/', views.PostView.as_view() ,name='post')
 ]

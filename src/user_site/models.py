@@ -40,3 +40,24 @@ class Cooperating(models.Model):
     number=models.IntegerField()
 
 
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    date= models.DateField(auto_now=True)
+    img = models.ImageField(upload_to='media/%Y/%m/%d', blank=True)
+
+class ClasterAnalysis(models.Model):
+    date=models.DateField(auto_now=False)
+    registered_in_scopus = models.IntegerField()
+    h_index_max = models.IntegerField()
+    h_index_min = models.IntegerField()
+    h_index_average = models.FloatField()
+    dispersion = models.FloatField()
+    deviation = models.FloatField()
+    dendrogram =models.TextField()
+    histogram= models.TextField()
+    img = models.ImageField(upload_to='media/%Y/%m/%d', blank=True)
+
+
+
+

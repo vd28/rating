@@ -41,11 +41,24 @@ class Doc_knowledge_Admin(admin.ModelAdmin):
 class Cooperating_Admin(admin.ModelAdmin):
     organization_name = ()
     number =()
-    actions_list = ('import_revision',)
 
     list_display = ("organization_name" , )
     search_fields = ('organization_name', )
     ordering = ( 'organization_name',)
     sortable_by = ('organization_name',)
+
+
+@admin.register(models.Post)
+class Cooperating_Admin(admin.ModelAdmin):
+    list_display = ("title" , )
+    search_fields = ('title', )
+    ordering = ( 'title',)
+    sortable_by = ('title',)
+@admin.register(models.ClasterAnalysis)
+class Claster_Analysis(admin.ModelAdmin):
+    list_display = ("date",)
+    search_fields = ('date',)
+    ordering = ('date',)
+    sortable_by = ('date',)
 
 

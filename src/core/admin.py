@@ -1,5 +1,6 @@
 import textwrap
 import json
+from io import BytesIO
 
 from django.db import transaction
 from django import forms
@@ -7,14 +8,24 @@ from django.shortcuts import render, redirect
 from django.contrib import admin, messages
 from django.utils.translation import ugettext as _, gettext_lazy
 from django.http import HttpResponse
+from reportlab.lib import styles
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4, letter
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 
 from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
 from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 from admin_actions.admin import ActionsModelAdmin
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus.para import Paragraph
 
 from . import models
 from .validators import FileValidator
 from .loaders import LoaderError, RevisionLoader
+
 
 
 class ArticleItemInline(admin.TabularInline):
@@ -36,12 +47,15 @@ class FacultyInline(NestedTabularInline):
     extra = 0
 
 
+
+
 @admin.register(models.University)
 class UniversityAdmin(NestedModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
     ordering = ('name',)
     inlines = (FacultyInline,)
+
 
 
 @admin.register(models.Faculty)
@@ -116,7 +130,7 @@ class PersonAdmin(admin.ModelAdmin):
         })
     )
     list_filter = ('person_types', PersonKeysFilter)
-    actions = ('export_keys',)
+    actions = ('export_keys')
 
     def university(self, obj: models.Person):
         return obj.department.faculty.university.name
@@ -146,6 +160,8 @@ class PersonAdmin(admin.ModelAdmin):
         response = HttpResponse(json.dumps(data, indent=4, separators=(',', ': ')), content_type='application/json')
         response['Content-Disposition'] = 'attachment; filename=keys.json'
         return response
+
+
 
 
 @admin.register(models.PersonType)
@@ -270,13 +286,46 @@ class BaseSnapshotAdmin(admin.ModelAdmin):
         '=person__semantic_scholar_key', '=person__wos_key'
     )
     autocomplete_fields = ('person',)
-
+    #actions = ('export_data',)
+    #actions_list = ('export_data',)
 
 @admin.register(models.ScopusSnapshot)
 class ScopusRevisionAdmin(BaseSnapshotAdmin):
     list_display = BaseSnapshotAdmin.list_display + ('h_index', 'documents', 'citations')
     ordering = BaseSnapshotAdmin.ordering + ('-h_index', '-documents', '-citations')
     list_editable = ('h_index', 'documents', 'citations')
+
+    #def export_data(self, request, queryset):
+
+        #data = ''
+
+        #pdfmetrics.registerFont(TTFont('FreeSans', 'FreeSans.ttf'))
+
+       # pdf_buffer=BytesIO()
+       # my_doc = SimpleDocTemplate(pdf_buffer,pagesize=A4)
+       # flowables = []
+
+       # text_style = ParagraphStyle('text',
+          #                         alignment=0,
+           #                        fontSize=14,
+           #                        fontName="FreeSans")
+       # for ScopusSnapshot in queryset:
+           # data += " name: " + ScopusSnapshot.person.full_name + " key: " + str(
+            #    ScopusSnapshot.person.scopus_key) + " h_index: " + str(ScopusSnapshot.h_index) + '\n'
+           # paragraph = Paragraph(data, text_style)
+            #flowables.append(paragraph)
+            #data = ''
+            #paragraph = Paragraph(data, text_style)
+            #flowables.append(paragraph)
+
+
+       # my_doc.build(flowables)
+       # pdf_value =pdf_buffer.getvalue()
+       # pdf_buffer.close()
+       # response = HttpResponse(content_type='application/pdf')
+        #response['Content-Disposition'] = 'attachment; filename=data.pdf'
+        #response.write(pdf_value)
+        #return response
 
 
 @admin.register(models.GoogleScholarSnapshot)
@@ -298,3 +347,6 @@ class WosRevisionAdmin(BaseSnapshotAdmin):
     list_display = BaseSnapshotAdmin.list_display + ('publications',)
     ordering = BaseSnapshotAdmin.ordering + ('-publications',)
     list_editable = ('publications',)
+
+
+

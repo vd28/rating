@@ -5,7 +5,8 @@ urlpatterns = [
     path('rating/', include([
         re_path('persons/?', rating.PersonRatingView.as_view()),
         re_path('faculties/?', rating.FacultyRatingView.as_view()),
-        re_path('departments/?', rating.DepartmentRatingView.as_view())
+        re_path('departments/?', rating.DepartmentRatingView.as_view()),
+        re_path('claster_analysis/',claster_analysis.ClasterAnalysisView.get)
     ])),
 
     path('universities/', include([
@@ -20,5 +21,9 @@ urlpatterns = [
     path('doc-knowledge/',include([
         re_path('knowledge',knowledge.KnowledgeView.get),
         re_path('cooperating',cooperating.CooperatingViev.get)
+    ])),
+path('post/',include([
+        re_path('post',post.PostView.get)
     ]))
+
 ]

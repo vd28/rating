@@ -110,7 +110,6 @@ var barChart = new Chart(diagram, {
 
 
          success:data => {
-            console.log(data);
              callback(data);
              drawGraph(data);
              }
