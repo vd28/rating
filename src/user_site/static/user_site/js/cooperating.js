@@ -17,14 +17,14 @@ onPageLoad('cooperating', () => {
   var labels_data = []
   var datasets_data = []
 
-  for(var i = 0;i<data['data'].length;i++){
-    labels_data.push(data['data'][i]['organization_name'])
-    datasets_data.push(data['data'][i]['number'])
+  for(var i = 0;i<data.length;i++){
+    labels_data.push(data[i]['organization_name'])
+    datasets_data.push(data[i]['number'])
   }
 
 
 var densityData = {
-  label: 'Срівробітництво',
+  label: 'Наукова співпраця',
   data: datasets_data,
   backgroundColor: [
     'rgba(0, 99, 132, 0.6)',
@@ -65,7 +65,7 @@ var chartOptions = {
     }
   }
 };
-//diagram.canvas.width = 2000;
+
 diagram.canvas.height = (labels_data.length*100);
 
 var barChart = new Chart(diagram, {
@@ -83,59 +83,43 @@ var barChart = new Chart(diagram, {
 
   $('#tabs').tabs();
 
-  const dataTableOptions = {
-    dom: 'lfr<"data-table-wrap"t>ip',
-    pageMenu: [10, 25, 50, 100],
-    pageLength: 25,
-    language: {
-      paginate: {
-        next: '&#8594;',
-        previous: '&#8592;'
-      }
-    },
-    processing: true,
-    serverSide: true,
-
- ajax: (data, callback, settings) => {
-
-      const params = $.param(buildPaginationParams(data));
-      const universityId = $('meta[data-name="university_id"]').attr('data-content');
-
-      $.ajax({
-
-        url :'/api/doc-knowledge/cooperating/',
-        contentType: 'application/json',
-        dataType: 'json',
-        data:{},
-
-
-         success:data => {
-             callback(data);
-             drawGraph(data);
-             }
-
-
-
-      });
-    }
-  };
-
-
-  $('#doc').DataTable(Object.assign({}, dataTableOptions, {
-
-    order: [[1, 'desc']],
-    columnDefs: [
+function table(table_data){
+   $(document).ready(function() {
+    var datatable = $('#coop').DataTable( {
+        data: table_data,
+         order: [[1, 'desc']],
+        columns: [
+             { title: "#" },
+            { title: "Заклади-партнери" },
+            { title: "К-ть документів" },
+        ],
+        fnRowCallback: function (nRow, aData, iDisplayIndex) {
+         var info = $(this).DataTable().page.info();
+         $("td:nth-child(1)", nRow).html(info.start + iDisplayIndex + 1);
+         return nRow;
+        },
+        columnDefs: [
       {
-        targets: [1],
+        targets: [0],
         searchable: false,
+        bSearchable: false,
         className: 'dt-center'
       },
-
-      {name: 'organization_name', data: 'organization_name', targets: 0},
-      {name: 'number', data: 'number', targets: 1}
+      {name: '#', data: 'number', targets: 0},
+      {name: 'organization_name', data: 'organization_name', targets: 1},
+      {name: 'number', data: 'number', targets: 2}
     ]
+    } );
+
+} );}
+ $.getJSON('/api/cooperating/', function(data) {
+        table(data);
+        drawGraph(data);
+        });
 
 
-  }));
+
+
+
 
   });

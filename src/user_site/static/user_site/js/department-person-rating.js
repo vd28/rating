@@ -70,13 +70,13 @@ onPageLoad('department_person_rating', () => {
   };
 
   $('#scopus').DataTable(Object.assign({}, dataTableOptions, {
-    order: [[1, 'desc']],
+    order: [[2, 'desc']],
     columnDefs: [
       {
-        targets: [1, 2, 3],
+        targets: [2, 3, 4],
         searchable: false,
         className: 'dt-center'
-      }, {targets: 2,
+      }, {targets: [2,3,4],
                     render: function ( data, type, row ) {
                       var color = 'black';
                       if (data > 10) {
@@ -91,52 +91,110 @@ onPageLoad('department_person_rating', () => {
                       return '<span style="color:' + color + '">' + data + '</span>';
                     }
                }
-      ,
-      {name: 'full_name', data: 'linkEl', targets: 0},
-      {name: 'h_index', data: 'h_index', targets: 1},
-      {name: 'documents', data: 'documents', targets: 2},
-      {name: 'citations', data: 'citations', targets: 3}
+      ,{targets: [0],
+                    render: function ( data, type, row, meta) {
+                          return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+       },
+      {name: 'full_name', data: 'linkEl', targets: 1},
+      {name: 'h_index', data: 'h_index', targets: 2},
+      {name: 'documents', data: 'documents', targets: 3},
+      {name: 'citations', data: 'citations', targets: 4}
     ]
   }));
 
   $('#google-scholar').DataTable(Object.assign({}, dataTableOptions, {
-    order: [[1, 'desc']],
+    order: [[2, 'desc']],
     columnDefs: [
       {
-        targets: [1, 2],
+        targets: [2, 3],
         searchable: false,
         className: "dt-center"
-      },
-      {name: 'full_name', data: 'linkEl', targets: 0},
-      {name: 'h_index', data: 'h_index', targets: 1},
-      {name: 'citations', data: 'citations', targets: 2}
+      },{targets: [2,3],
+                    render: function ( data, type, row ) {
+                      var color = 'black';
+                      if (data > 10) {
+                        color = 'green';
+                      }
+                      if ((data > 5 )&&(data <=10)) {
+                        color = 'yellow';
+                      }
+                      if (data <= 5) {
+                        color = 'red';
+                      }
+                      return '<span style="color:' + color + '">' + data + '</span>';
+                    }
+               },{targets: [0],
+                    render: function ( data, type, row, meta) {
+                          return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+       },
+      {name: 'full_name', data: 'linkEl', targets: 1},
+      {name: 'h_index', data: 'h_index', targets: 2},
+      {name: 'citations', data: 'citations', targets: 3}
     ]
   }));
 
   $('#semantic-scholar').DataTable(Object.assign({}, dataTableOptions, {
-    order: [[1, 'desc']],
+    order: [[2, 'desc']],
     columnDefs: [
       {
-        targets: [1, 2],
+        targets: [2, 3],
         searchable: false,
         className: "dt-center"
-      },
-      {name: 'full_name', data: 'linkEl', targets: 0},
-      {name: 'citation_velocity', data: 'citation_velocity', targets: 1},
-      {name: 'influential_citation_count', data: 'influential_citation_count', targets: 2}
+      },{targets: [2,3],
+                    render: function ( data, type, row ) {
+                      var color = 'black';
+                      if (data > 10) {
+                        color = 'green';
+                      }
+                      if ((data > 5 )&&(data <=10)) {
+                        color = 'yellow';
+                      }
+                      if (data <= 5) {
+                        color = 'red';
+                      }
+                      return '<span style="color:' + color + '">' + data + '</span>';
+                    }
+               },{targets: [0],
+                    render: function ( data, type, row, meta) {
+                          return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+       },
+      {name: 'full_name', data: 'linkEl', targets: 1},
+      {name: 'citation_velocity', data: 'citation_velocity', targets: 2},
+      {name: 'influential_citation_count', data: 'influential_citation_count', targets: 3}
     ]
   }));
 
   $('#wos').DataTable(Object.assign({}, dataTableOptions, {
-    order: [[1, 'desc']],
+    order: [[2, 'desc']],
     columnDefs: [
       {
-        targets: [1],
+        targets: [2],
         searchable: false,
         className: "dt-center"
-      },
-      {name: 'full_name', data: 'linkEl', targets: 0},
-      {name: 'publications', data: 'publications', targets: 1}
+      },{targets: 2,
+                    render: function ( data, type, row ) {
+                      var color = 'black';
+                      if (data > 10) {
+                        color = 'green';
+                      }
+                      if ((data > 5 )&&(data <=10)) {
+                        color = 'yellow';
+                      }
+                      if (data <= 5) {
+                        color = 'red';
+                      }
+                      return '<span style="color:' + color + '">' + data + '</span>';
+                    }
+               },{targets: [0],
+                    render: function ( data, type, row, meta) {
+                          return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+       },
+      {name: 'full_name', data: 'linkEl', targets: 1},
+      {name: 'publications', data: 'publications', targets: 2}
     ]
   }));
 

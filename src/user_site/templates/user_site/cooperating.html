@@ -1,44 +1,17 @@
 {% extends 'user_site/base.html' %}
 
 {% block content %}
- <style>
-  td.style1 { vertical-align:top; text-align:center; padding-left:0px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; font-weight:bold; color:#323232; font-family:'Arial'; font-size:11pt; background-color:#FFFFFF }
-      th.style1 { vertical-align:top; text-align:center; padding-left:0px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; font-weight:bold; color:#323232; font-family:'Arial'; font-size:11pt; background-color:#FFFFFF }
-   table {
-    width: 600px; /* Ширина таблицы */
-    margin: auto; /* Выравниваем таблицу по центру окна  */
-   border-collapse: collapse; /* Убираем двойные линии между ячейками */
-   }
-   td, th {
-    padding: 3px; /* Поля вокруг содержимого таблицы */
-    text-align: center; /* Выравниваем текст по центру ячейки */
-    border: 1px solid black; /* Параметры рамки */
-   }
-   th {
-    background: #b0e0e6; /* Цвет фона */
-   }
-   th.red(background-color:#FF0000)
 
-  </style>
 <div class="card">
+  <div id="tab-doc">
+    <table id="coop" class="data-table">
 
-            <div id="tab-doc">
-                <table id="doc" class="data-table">
-                    <thead>
-                    <tr>
-                        <th>Назва організації</th>
-                        <th>Документів</th>
-
-                    </tr>
-                    </thead>
-
-                    <tbody></tbody>
-                </table>
-            </div>
+    </table>
+  </div>
 </div>
 <div class="card">
-  <canvas id="diagram" width="100" height="100" ></canvas>
+  <canvas id="diagram" width="100" height="100"></canvas>
 
 
-  </div>
+</div>
 {% endblock %}
